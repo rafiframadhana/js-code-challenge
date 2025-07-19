@@ -247,29 +247,29 @@ export default function CodeEditor({ challenge, onCodeEvaluate, isDarkMode }: Co
   const allTestsPassed = results.length > 0 && results.every(r => r.passed);
 
   return (
-    <div className="flex flex-col h-full space-y-4">
+    <div className="flex flex-col h-full space-y-4 lg:space-y-4">
       {/* Code Editor */}
       <div className="flex-1">
-        <div className="flex items-center justify-between mb-3">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 space-y-2 sm:space-y-0">
           <h3 className={`font-medium ${isDarkMode ? 'text-gray-200' : 'text-gray-700'}`}>
             Code Editor
           </h3>
           <div className="flex space-x-2">
             <button
               onClick={resetCode}
-              className={`flex items-center space-x-1 px-3 py-1.5 rounded-md text-sm transition-colors ${
+              className={`flex items-center space-x-1 px-3 lg:px-3 py-1.5 rounded-md text-sm transition-colors ${
                 isDarkMode
                   ? 'bg-gray-700 hover:bg-gray-600 text-gray-300'
                   : 'bg-gray-100 hover:bg-gray-200 text-gray-600'
               }`}
             >
               <RotateCcw className="w-4 h-4" />
-              <span>Reset</span>
+              <span className="hidden sm:inline">Reset</span>
             </button>
             <button
               onClick={evaluateCode}
               disabled={isRunning}
-              className="flex items-center space-x-1 px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm transition-colors disabled:opacity-50"
+              className="flex items-center space-x-1 px-3 lg:px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm transition-colors disabled:opacity-50"
             >
               <Play className="w-4 h-4" />
               <span>{isRunning ? 'Running...' : 'Evaluate'}</span>

@@ -24,6 +24,7 @@ export default function App() {
   const { completedChallenges, markCompleted, isCompleted } = useProgress();
   const [selectedChallenge, setSelectedChallenge] = useState<Challenge | null>(null);
   const [showLanding, setShowLanding] = useState(true);
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
   // Don't auto-select first challenge on load anymore since we start with landing page
   const handleGetStarted = () => {
@@ -37,6 +38,11 @@ export default function App() {
   const handleLogoClick = () => {
     setShowLanding(true);
     setSelectedChallenge(null);
+    setIsMobileSidebarOpen(false);
+  };
+
+  const toggleMobileSidebar = () => {
+    setIsMobileSidebarOpen(!isMobileSidebarOpen);
   };
 
   const handleCodeEvaluate = (code: string, results: TestResult[]) => {
@@ -48,29 +54,38 @@ export default function App() {
   const handleChallengeSelect = (challenge: Challenge) => {
     setSelectedChallenge(challenge);
     setShowLanding(false);
+    setIsMobileSidebarOpen(false); // Close mobile sidebar when challenge is selected
   };
 
   return (
     <div className={`min-h-screen flex flex-col ${isDarkMode ? 'bg-gray-900' : 'bg-gray-50'} transition-colors duration-200`}>
-      <Header isDarkMode={isDarkMode} onThemeToggle={toggleTheme} onLogoClick={handleLogoClick} />
+      <Header 
+        isDarkMode={isDarkMode} 
+        onThemeToggle={toggleTheme} 
+        onLogoClick={handleLogoClick} 
+        onMobileSidebarToggle={toggleMobileSidebar}
+        showMobileSidebarToggle={!showLanding}
+      />
       
       {showLanding ? (
         <LandingPage isDarkMode={isDarkMode} onGetStarted={handleGetStarted} />
       ) : (
-        <div className="flex flex-1 h-[calc(100vh-73px-auto)]">
+        <div className="flex flex-1 min-h-0 flex-col lg:flex-row">
           <Sidebar
             selectedChallenge={selectedChallenge}
             onChallengeSelect={handleChallengeSelect}
             completedChallenges={completedChallenges}
             isDarkMode={isDarkMode}
+            isMobileOpen={isMobileSidebarOpen}
+            onMobileClose={() => setIsMobileSidebarOpen(false)}
           />
           
-          <div className="flex-1 flex overflow-hidden">
+          <div className="flex-1 flex overflow-hidden flex-col lg:flex-row min-h-0">
             {selectedChallenge && (
               <>
                 {/* Question Panel */}
-                <div className="w-1/2 overflow-y-auto">
-                  <div className="p-6">
+                <div className="w-full lg:w-1/2 overflow-y-auto">
+                  <div className="p-4 sm:p-6">
                     <QuestionDisplay
                       challenge={selectedChallenge}
                       isCompleted={isCompleted(selectedChallenge.id)}
@@ -80,8 +95,8 @@ export default function App() {
                 </div>
                 
                 {/* Code Editor Panel */}
-                <div className={`w-1/2 border-l ${isDarkMode ? 'border-gray-700' : 'border-gray-200'} overflow-y-auto`}>
-                  <div className="p-6 h-full">
+                <div className={`w-full lg:w-1/2 border-t lg:border-t-0 lg:border-l ${isDarkMode ? 'border-gray-700' : 'border-gray-200'} overflow-y-auto flex-1 min-h-0`}>
+                  <div className="p-4 sm:p-6 h-full">
                     <CodeEditor
                       key={selectedChallenge.id} // Force re-render when challenge changes
                       challenge={selectedChallenge}

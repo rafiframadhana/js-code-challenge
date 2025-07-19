@@ -8,9 +8,11 @@ interface SidebarProps {
   onChallengeSelect: (challenge: Challenge) => void;
   completedChallenges: Set<string>;
   isDarkMode: boolean;
+  isMobileOpen?: boolean;
+  onMobileClose?: () => void;
 }
 
-export default function Sidebar({ selectedChallenge, onChallengeSelect, completedChallenges, isDarkMode }: SidebarProps) {
+export default function Sidebar({ selectedChallenge, onChallengeSelect, completedChallenges, isDarkMode, isMobileOpen, onMobileClose }: SidebarProps) {
   const [expandedLevels, setExpandedLevels] = useState<Set<string>>(new Set(['Beginner']));
   const [expandedTopics, setExpandedTopics] = useState<Set<string>>(new Set());
 
@@ -65,11 +67,28 @@ export default function Sidebar({ selectedChallenge, onChallengeSelect, complete
   };
 
   return (
-    <div className={`w-80 h-full ${isDarkMode ? 'bg-gray-900 border-gray-700' : 'bg-white border-gray-200'} border-r overflow-y-auto`}>
-      <div className="p-6">
-        <h2 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-6`}>
-          Coding Challenges
-        </h2>
+    <React.Fragment>
+      {/* Mobile Backdrop */}
+      {isMobileOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
+          onClick={onMobileClose}
+        />
+      )}
+      
+      {/* Sidebar */}
+      <div className={`
+        ${isMobileOpen ? 'translate-x-0' : '-translate-x-full'} 
+        lg:translate-x-0 lg:static lg:w-80 
+        fixed inset-y-0 left-0 z-50 
+        w-80 h-full 
+        ${isDarkMode ? 'bg-gray-900 border-gray-700' : 'bg-white border-gray-200'} 
+        border-r overflow-y-auto transition-transform duration-300 ease-in-out
+      `}>
+        <div className="p-4 lg:p-6">
+          <h2 className={`text-lg lg:text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-4 lg:mb-6`}>
+            Coding Challenges
+          </h2>
         
         <div className="space-y-2">
           {Object.entries(challengeData.levels).map(([level, topics]) => {
@@ -141,7 +160,10 @@ export default function Sidebar({ selectedChallenge, onChallengeSelect, complete
                                 return (
                                   <button
                                     key={challenge.id}
-                                    onClick={() => onChallengeSelect(challenge)}
+                                    onClick={() => {
+                                      onChallengeSelect(challenge);
+                                      onMobileClose?.(); // Close mobile sidebar when challenge is selected
+                                    }}
                                     className={`w-full flex items-center justify-between p-2 rounded-md text-left transition-all duration-200 ${
                                       isSelected
                                         ? isDarkMode
@@ -170,7 +192,8 @@ export default function Sidebar({ selectedChallenge, onChallengeSelect, complete
             );
           })}
         </div>
+        </div>
       </div>
-    </div>
+    </React.Fragment>
   );
 }

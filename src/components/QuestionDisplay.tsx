@@ -13,25 +13,25 @@ export default function QuestionDisplay({ challenge, isCompleted, isDarkMode }: 
   const [showHint, setShowHint] = useState(false);
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-start justify-between">
+    <div className="space-y-4 lg:space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between space-y-3 sm:space-y-0">
         <div className="flex-1">
           <div className="flex items-center space-x-3 mb-3">
-            <h1 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+            <h1 className={`text-xl lg:text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
               {challenge.title}
             </h1>
             {isCompleted && (
-              <CheckCircle className="w-6 h-6 text-green-500" />
+              <CheckCircle className="w-5 h-5 lg:w-6 lg:h-6 text-green-500" />
             )}
           </div>
-          <p className={`text-lg leading-relaxed ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+          <p className={`text-base lg:text-lg leading-relaxed ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
             {challenge.description}
           </p>
         </div>
         
         <button
           onClick={() => setShowHint(true)}
-          className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
+          className={`flex items-center justify-center space-x-2 px-3 lg:px-4 py-2 rounded-lg transition-colors self-start sm:self-auto ${
             isDarkMode
               ? 'bg-yellow-900/20 hover:bg-yellow-900/30 text-yellow-400 border border-yellow-700'
               : 'bg-yellow-50 hover:bg-yellow-100 text-yellow-700 border border-yellow-200'
@@ -47,7 +47,7 @@ export default function QuestionDisplay({ challenge, isCompleted, isDarkMode }: 
         <h3 className={`font-semibold ${isDarkMode ? 'text-gray-200' : 'text-gray-700'}`}>
           Example Test Cases
         </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
           {challenge.testCases.slice(0, 2).map((testCase, index) => (
             <div
               key={index}
