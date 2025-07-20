@@ -21,8 +21,8 @@ interface CodeEditorProps {
 interface TestResult {
   passed: boolean;
   input: string;
-  expected: any;
-  actual: any;
+  expected: unknown;
+  actual: unknown;
   error?: string;
   description?: string;
 }
@@ -110,7 +110,7 @@ export default function CodeEditor({
 
     // Mock console.log to capture output
     const originalLog = console.log;
-    console.log = (...args: any[]) => {
+    console.log = (...args: unknown[]) => {
       logs.push(args.map((arg) => String(arg)).join(" "));
       originalLog(...args);
     };
@@ -150,10 +150,10 @@ export default function CodeEditor({
       for (const testCase of challenge.testCases) {
         try {
           // Parse input more carefully
-          const parseInput = (input: string): any[] => {
+          const parseInput = (input: string): unknown[] => {
             try {
               // Handle multiple parameters separated by commas (but not within arrays/objects)
-              const params: any[] = [];
+              const params: unknown[] = [];
               let currentParam = "";
               let depth = 0;
               let inString = false;
@@ -201,10 +201,10 @@ export default function CodeEditor({
                   return new Function(`"use strict"; return (${param})`)();
                 } catch {
                   // If parsing fails, return as string (remove quotes if present)
-                  return param.replace(/^['"]|['"]$/g, "");
+                  return String(param).replace(/^['"]|['"]$/g, "");
                 }
               });
-            } catch (error) {
+            } catch {
               // Fallback: try to parse the entire input as a single parameter
               try {
                 return [new Function(`"use strict"; return (${input})`)()];
@@ -218,7 +218,7 @@ export default function CodeEditor({
           const actual = userFunction(...functionArgs);
 
           // Deep comparison for arrays and objects
-          const deepEqual = (a: any, b: any): boolean => {
+          const deepEqual = (a: unknown, b: unknown): boolean => {
             if (a === b) return true;
             if (a == null || b == null) return false;
             if (Array.isArray(a) && Array.isArray(b)) {
@@ -226,10 +226,15 @@ export default function CodeEditor({
               return a.every((val, index) => deepEqual(val, b[index]));
             }
             if (typeof a === "object" && typeof b === "object") {
-              const keysA = Object.keys(a);
-              const keysB = Object.keys(b);
+              const keysA = Object.keys(a as Record<string, unknown>);
+              const keysB = Object.keys(b as Record<string, unknown>);
               if (keysA.length !== keysB.length) return false;
-              return keysA.every((key) => deepEqual(a[key], b[key]));
+              return keysA.every((key) => 
+                deepEqual(
+                  (a as Record<string, unknown>)[key], 
+                  (b as Record<string, unknown>)[key]
+                )
+              );
             }
             return false;
           };
@@ -465,6 +470,7 @@ export default function CodeEditor({
         >
           {!isMobile && (
             <>
+              <span>💡 Press </span>
               <kbd
                 className={`px-1 py-0.5 rounded text-xs font-mono ${
                   isDarkMode
