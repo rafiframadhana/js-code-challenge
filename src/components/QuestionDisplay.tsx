@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Lightbulb, CheckCircle } from 'lucide-react';
 import type { Challenge } from '../data/challenges';
 import HintModal from './HintModal';
+import DifficultyTag from './DifficultyTag';
+import { getChallengeDifficulty } from '../utils/challengeUtils';
 
 interface QuestionDisplayProps {
   challenge: Challenge;
@@ -11,18 +13,24 @@ interface QuestionDisplayProps {
 
 export default function QuestionDisplay({ challenge, isCompleted, isDarkMode }: QuestionDisplayProps) {
   const [showHint, setShowHint] = useState(false);
+  const difficulty = getChallengeDifficulty(challenge);
 
   return (
     <div className="space-y-4 lg:space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between space-y-3 sm:space-y-0">
         <div className="flex-1">
-          <div className="flex items-center space-x-3 mb-3">
+          <div className="flex items-center space-x-3 mb-3 flex-wrap gap-2">
             <h1 className={`text-xl lg:text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
               {challenge.title}
             </h1>
-            {isCompleted && (
-              <CheckCircle className="w-5 h-5 lg:w-6 lg:h-6 text-green-500" />
-            )}
+            <div className="flex items-center space-x-2">
+              {difficulty && (
+                <DifficultyTag level={difficulty} isDarkMode={isDarkMode} />
+              )}
+              {isCompleted && (
+                <CheckCircle className="w-5 h-5 lg:w-6 lg:h-6 text-green-500" />
+              )}
+            </div>
           </div>
           <p className={`text-base lg:text-lg leading-relaxed ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
             {challenge.description}

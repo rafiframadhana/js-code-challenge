@@ -17,16 +17,16 @@ export default function HintModal({
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
       {/* Backdrop */}
-      <div
-        className="fixed inset-0 w-full h-full bg-black/50 backdrop-blur-sm"
+      <div 
+        className="fixed inset-0 bg-black/50 backdrop-blur-sm"
         onClick={onClose}
       />
 
       {/* Modal */}
       <div
-        className={`relative z-[50] w-full max-w-md mx-4 p-6 rounded-xl shadow-xl transform -translate-y-6 ${
+        className={`relative z-[50] w-full max-w-md mx-4 p-6 rounded-xl shadow-xl transform ${
           isDarkMode
             ? "bg-gray-800 border border-gray-700"
             : "bg-white border border-gray-200"

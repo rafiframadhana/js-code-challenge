@@ -65,6 +65,8 @@ export default function App() {
     if (firstChallenge) {
       setSelectedChallenge(firstChallenge);
       setShowLanding(false);
+      // Scroll to top when navigating to a challenge
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -72,6 +74,8 @@ export default function App() {
     setShowLanding(true);
     setSelectedChallenge(null);
     setIsMobileSidebarOpen(false);
+    // Scroll to top when going back to landing page
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const toggleMobileSidebar = () => {
@@ -98,6 +102,8 @@ export default function App() {
       setIsDesktopSidebarOpen(false); // Close desktop sidebar when challenge is selected
       localStorage.setItem('desktopSidebarOpen', JSON.stringify(false));
     }
+    // Scroll to top when switching challenges
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -141,6 +147,8 @@ export default function App() {
                       key={selectedChallenge.id} // Force re-render when challenge changes
                       challenge={selectedChallenge}
                       onCodeEvaluate={handleCodeEvaluate}
+                      onChallengeSelect={handleChallengeSelect}
+                      completedChallenges={completedChallenges}
                       isDarkMode={isDarkMode}
                       isSoundOn={isSoundOn}
                     />

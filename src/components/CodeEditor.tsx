@@ -1,16 +1,19 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import Editor from "@monaco-editor/react";
 import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { oneDark } from "@codemirror/theme-one-dark";
 import { Play, RotateCcw } from "lucide-react";
 import type { Challenge } from "../data/challenges";
-import Confetti from "./Confetti.tsx";
+import ChallengeSuccessModal from "./ChallengeSuccessModal";
 import { useDeviceType } from "../hooks/useDeviceType";
+import { findNextUncompletedChallenge } from "../utils/challengeUtils";
 
 interface CodeEditorProps {
   challenge: Challenge;
   onCodeEvaluate: (code: string, results: TestResult[]) => void;
+  onChallengeSelect: (challenge: Challenge) => void;
+  completedChallenges: Set<string>;
   isDarkMode: boolean;
   isSoundOn: boolean;
 }
@@ -27,6 +30,8 @@ interface TestResult {
 export default function CodeEditor({
   challenge,
   onCodeEvaluate,
+  onChallengeSelect,
+  completedChallenges,
   isDarkMode,
   isSoundOn,
 }: CodeEditorProps) {
@@ -34,6 +39,7 @@ export default function CodeEditor({
   const [results, setResults] = useState<TestResult[]>([]);
   const [isRunning, setIsRunning] = useState(false);
   const [consoleOutput, setConsoleOutput] = useState<string[]>([]);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const editorRef = useRef<any>(null);
   const isMobile = useDeviceType();
 
@@ -60,7 +66,7 @@ export default function CodeEditor({
 
     // Configure editor options
     editor.updateOptions({
-      fontSize: 14,
+      fontSize: 16,
       lineHeight: 20,
       fontFamily:
         "'Fira Code', 'JetBrains Mono', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace",
@@ -269,11 +275,6 @@ export default function CodeEditor({
       setIsRunning(false);
       onCodeEvaluate(code, testResults);
 
-      window.scrollTo({
-        top: isMobile ? document.body.scrollHeight : 300,
-        behavior: "smooth",
-      });
-
       // Sound Effect
       const failedTest =
         testResults.length > 0 && testResults.every((r) => !r.passed);
@@ -283,6 +284,11 @@ export default function CodeEditor({
           console.error("Failed to play sound:", err);
         });
         sound.volume = isSoundOn ? 0.5 : 0;
+
+        window.scrollTo({
+          top: isMobile ? document.body.scrollHeight : 300,
+          behavior: "smooth",
+        });
       }
 
       const partiallyCorrect =
@@ -295,13 +301,37 @@ export default function CodeEditor({
           console.error("Failed to play sound:", err);
         });
         sound.volume = isSoundOn ? 1 : 0;
+
+        window.scrollTo({
+          top: isMobile ? document.body.scrollHeight : 300,
+          behavior: "smooth",
+        });
       }
     }
   };
 
   const allTestsPassed = results.length > 0 && results.every((r) => r.passed);
 
-  // Sound Effect
+  // Get next uncompleted challenge
+  const nextChallenge = findNextUncompletedChallenge(
+    challenge,
+    completedChallenges
+  );
+  const hasNextChallenge = nextChallenge !== null;
+
+  // Handlers for success modal
+  const handleCloseSuccessModal = () => {
+    setShowSuccessModal(false);
+  };
+
+  const handleContinueToNext = () => {
+    if (nextChallenge) {
+      onChallengeSelect(nextChallenge);
+    }
+    setShowSuccessModal(false);
+  };
+
+  // Sound Effect and Success Modal
   useEffect(() => {
     if (allTestsPassed) {
       const sound = new Audio("/correct-answer.mp3");
@@ -309,8 +339,11 @@ export default function CodeEditor({
         console.error("Failed to play sound:", err);
       });
       sound.volume = isSoundOn ? 0.5 : 0;
+
+      // Show success modal
+      setShowSuccessModal(true);
     }
-  }, [allTestsPassed]);
+  }, [allTestsPassed, isSoundOn]);
 
   return (
     <div className="flex flex-col h-full space-y-4 lg:space-y-4">
@@ -383,7 +416,7 @@ export default function CodeEditor({
               onMount={handleEditorDidMount}
               theme={isDarkMode ? "vs-dark" : "light"}
               options={{
-                fontSize: 14,
+                fontSize: 16,
                 lineHeight: 20,
                 fontFamily:
                   "'Fira Code', 'JetBrains Mono', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace",
@@ -416,6 +449,10 @@ export default function CodeEditor({
                   comments: true,
                   strings: true,
                 },
+                padding: {
+                  top: 10,
+                  bottom: 10,
+                },
               }}
             />
           )}
@@ -426,9 +463,6 @@ export default function CodeEditor({
             isDarkMode ? "text-gray-400" : "text-gray-500"
           }`}
         >
-          <span>
-            💡 {isMobile ? "Touch and hold to see options" : "Press "}
-          </span>
           {!isMobile && (
             <>
               <kbd
@@ -439,6 +473,16 @@ export default function CodeEditor({
                 }`}
               >
                 Shift+Alt+F
+              </kbd>
+              <span> or </span>
+              <kbd
+                className={`px-1 py-0.5 rounded text-xs font-mono ${
+                  isDarkMode
+                    ? "bg-gray-700 text-gray-300"
+                    : "bg-gray-200 text-gray-600"
+                }`}
+              >
+                Shift+Option+F
               </kbd>
               <span> to format your code</span>
             </>
@@ -549,7 +593,14 @@ export default function CodeEditor({
         </div>
       )}
 
-      <Confetti trigger={allTestsPassed} />
+      <ChallengeSuccessModal
+        isOpen={showSuccessModal}
+        challenge={challenge}
+        onClose={handleCloseSuccessModal}
+        onContinue={handleContinueToNext}
+        isDarkMode={isDarkMode}
+        hasNextChallenge={hasNextChallenge}
+      />
     </div>
   );
 }
