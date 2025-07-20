@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Moon, Sun, RotateCcw, Menu, Volume2, VolumeX } from "lucide-react";
 import { useProgress } from "../hooks/useProgress";
 import ConfirmModal from "./ConfirmModal";
+import { Tooltip } from "react-tooltip";
 
 interface HeaderProps {
   isDarkMode: boolean;
@@ -90,13 +91,21 @@ export default function Header({
                       ? "bg-gray-700 hover:bg-gray-600 text-gray-300"
                       : "bg-gray-100 hover:bg-gray-200 text-gray-600"
                   }`}
-                  title="Reset all progress"
+                  id="reset-progress-button"
                 >
                   <RotateCcw className="md:w-4 md:h-4 w-5 h-5" />
                   <span className="text-xs sm:text-sm hidden sm:inline">
                     Reset Progress
                   </span>
                 </button>
+                <Tooltip
+                  anchorSelect="#reset-progress-button"
+                  content="Reset all progress"
+                  place="bottom"
+                  noArrow={true}
+                  variant={isDarkMode ? "light" : "dark"}
+                  style={{ zIndex: 1000 }}
+                />
 
                 <button
                   onClick={onSoundToggle}
@@ -105,7 +114,7 @@ export default function Header({
                       ? "bg-gray-700 hover:bg-gray-600 text-gray-300"
                       : "bg-gray-100 hover:bg-gray-200 text-gray-600"
                   }`}
-                  title={`Turn sound ${isSoundOn ? "off" : "on"}`}
+                  id="toggle-sound-button"
                 >
                   {isSoundOn ? (
                     <Volume2 className="w-5 h-5" />
@@ -113,6 +122,14 @@ export default function Header({
                     <VolumeX className="w-5 h-5" />
                   )}
                 </button>
+                <Tooltip
+                  anchorSelect="#toggle-sound-button"
+                  content={`Turn sound ${isSoundOn ? "off" : "on"}`}
+                  place="bottom"
+                  noArrow={true}
+                  variant={isDarkMode ? "light" : "dark"}
+                  style={{ zIndex: 1000 }}
+                />
               </>
             )}
 
@@ -123,7 +140,7 @@ export default function Header({
                   ? "bg-gray-700 hover:bg-gray-600 text-yellow-400"
                   : "bg-gray-100 hover:bg-gray-200 text-gray-600"
               }`}
-              title={`Switch to ${isDarkMode ? "light" : "dark"} mode`}
+              id="toggle-theme-button"
             >
               {isDarkMode ? (
                 <Sun className="w-5 h-5" />
@@ -131,34 +148,54 @@ export default function Header({
                 <Moon className="w-5 h-5" />
               )}
             </button>
+            <Tooltip
+              anchorSelect="#toggle-theme-button"
+              content={`Switch to ${isDarkMode ? "light" : "dark"} mode`}
+              place="bottom-start"
+              noArrow={true}
+              variant={isDarkMode ? "light" : "dark"}
+              style={{ zIndex: 1000 }}
+            />
 
             {/* Desktop Sidebar Toggle */}
             {showDesktopSidebarToggle && (
-              <button
-                onClick={onDesktopSidebarToggle}
-                className={`hidden lg:block p-2 rounded-md transition-colors ${
-                  isDarkMode
-                    ? "bg-gray-700 hover:bg-gray-600 text-gray-300"
-                    : "bg-gray-100 hover:bg-gray-200 text-gray-600"
-                }`}
-                title="Toggle sidebar"
-              >
-                <Menu className="w-5 h-5" />
-              </button>
+              <>
+                <button
+                  onClick={onDesktopSidebarToggle}
+                  className={`hidden lg:block p-2 rounded-lg transition-colors ${
+                    isDarkMode
+                      ? "bg-gray-700 hover:bg-gray-600 text-gray-300"
+                      : "bg-gray-100 hover:bg-gray-200 text-gray-600"
+                  }`}
+                  id="toggle-sidebar-button"
+                >
+                  <Menu className="w-5 h-5" />
+                </button>
+                <Tooltip
+                  anchorSelect="#toggle-sidebar-button"
+                  content="Toggle sidebar"
+                  place="bottom-start"
+                  noArrow={true}
+                  variant={isDarkMode ? "light" : "dark"}
+                  style={{ zIndex: 1000 }}
+                />
+              </>
             )}
 
             {/* Mobile Sidebar Toggle */}
             {showMobileSidebarToggle && (
-              <button
-                onClick={onMobileSidebarToggle}
-                className={`lg:hidden p-2 rounded-md transition-colors ${
-                  isDarkMode
-                    ? "bg-gray-700 hover:bg-gray-600 text-gray-300"
-                    : "bg-gray-100 hover:bg-gray-200 text-gray-600"
-                }`}
-              >
-                <Menu className="w-5 h-5" />
-              </button>
+              <>
+                <button
+                  onClick={onMobileSidebarToggle}
+                  className={`lg:hidden p-2 rounded-lg transition-colors ${
+                    isDarkMode
+                      ? "bg-gray-700 hover:bg-gray-600 text-gray-300"
+                      : "bg-gray-100 hover:bg-gray-200 text-gray-600"
+                  }`}
+                >
+                  <Menu className="w-5 h-5" />
+                </button>
+              </>
             )}
           </div>
         </div>

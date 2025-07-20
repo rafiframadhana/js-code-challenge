@@ -8,6 +8,7 @@ import {
   findNextChallenge,
   findPrevChallenge,
 } from "../utils/challengeUtils";
+import { Tooltip } from "react-tooltip";
 
 interface QuestionDisplayProps {
   challenge: Challenge;
@@ -160,35 +161,53 @@ export default function QuestionDisplay({
       {/* Navigation buttons at the bottom */}
       <div className="flex justify-between items-center pt-4 border-t border-gray-200 dark:border-gray-700">
         {prevChallenge ? (
-          <button
-            onClick={handlePrevChallenge}
-            className={`flex items-center justify-center space-x-2 px-3 lg:px-4 py-2 rounded-lg transition-colors ${
-              isDarkMode
-                ? "bg-blue-900/20 hover:bg-blue-900/30 text-blue-400 border border-blue-700"
-                : "bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200"
-            }`}
-            title={`Previous: ${prevChallenge.title}`}
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span className="text-sm font-medium">Previous</span>
-          </button>
+          <>
+            <button
+              onClick={handlePrevChallenge}
+              className={`flex items-center justify-center space-x-2 px-3 lg:px-4 py-2 rounded-lg transition-colors ${
+                isDarkMode
+                  ? "bg-blue-900/20 hover:bg-blue-900/30 text-blue-400 border border-blue-700"
+                  : "bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200"
+              }`}
+              id="toggle-prev"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              <span className="text-sm font-medium">Previous</span>
+            </button>
+            <Tooltip
+              anchorSelect="#toggle-prev"
+              content={`Previous: ${prevChallenge.title}`}
+              place="bottom-start"
+              variant={isDarkMode ? "light" : "dark"}
+              style={{ zIndex: 1000 }}
+            />
+          </>
         ) : (
           <div></div>
         )}
 
         {nextChallenge ? (
-          <button
-            onClick={handleNextChallenge}
-            className={`flex items-center justify-center space-x-2 px-3 lg:px-4 py-2 rounded-lg transition-colors ${
-              isDarkMode
-                ? "bg-blue-900/20 hover:bg-blue-900/30 text-blue-400 border border-blue-700"
-                : "bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200"
-            }`}
-            title={`Next: ${nextChallenge.title}`}
-          >
-            <span className="text-sm font-medium">Next</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
+          <>
+            <button
+              onClick={handleNextChallenge}
+              className={`flex items-center justify-center space-x-2 px-3 lg:px-4 py-2 rounded-lg transition-colors ${
+                isDarkMode
+                  ? "bg-blue-900/20 hover:bg-blue-900/30 text-blue-400 border border-blue-700"
+                  : "bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200"
+              }`}
+              id="toggle-next"
+            >
+              <span className="text-sm font-medium">Next</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+            <Tooltip
+              anchorSelect="#toggle-next"
+              content={`Next: ${nextChallenge.title}`}
+              place="bottom-end"
+              variant={isDarkMode ? "light" : "dark"}
+              style={{ zIndex: 1000 }}
+            />
+          </>
         ) : (
           <div></div>
         )}
