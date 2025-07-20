@@ -54,3 +54,49 @@ export function findNextUncompletedChallenge(
   // If all challenges are completed, return null
   return null;
 }
+
+export function findNextChallenge(
+  currentChallenge: Challenge
+): Challenge | null {
+  const allChallenges: Challenge[] = [];
+  
+  // Flatten all challenges into a single array while maintaining order
+  Object.keys(challengeData.levels).forEach(levelName => {
+    const level = challengeData.levels[levelName];
+    Object.keys(level).forEach(topicName => {
+      const challenges = level[topicName];
+      allChallenges.push(...challenges);
+    });
+  });
+
+  // Find current challenge index
+  const currentIndex = allChallenges.findIndex(challenge => challenge.id === currentChallenge.id);
+  
+  if (currentIndex === -1 || currentIndex === allChallenges.length - 1) return null;
+
+  // Return the next challenge regardless of completion status
+  return allChallenges[currentIndex + 1];
+}
+
+export function findPrevChallenge(
+  currentChallenge: Challenge
+): Challenge | null {
+  const allChallenges: Challenge[] = [];
+  
+  // Flatten all challenges into a single array while maintaining order
+  Object.keys(challengeData.levels).forEach(levelName => {
+    const level = challengeData.levels[levelName];
+    Object.keys(level).forEach(topicName => {
+      const challenges = level[topicName];
+      allChallenges.push(...challenges);
+    });
+  });
+
+  // Find current challenge index
+  const currentIndex = allChallenges.findIndex(challenge => challenge.id === currentChallenge.id);
+  
+  if (currentIndex === -1 || currentIndex === 0) return null;
+
+  // Return the previous challenge regardless of completion status
+  return allChallenges[currentIndex - 1];
+}

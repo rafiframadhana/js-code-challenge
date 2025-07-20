@@ -43,15 +43,38 @@ export default function LandingPage({ isDarkMode, onGetStarted }: LandingPagePro
             <div className="space-y-4">
               <button
                 onClick={onGetStarted}
-                className={`group inline-flex items-center space-x-2 px-6 py-3 rounded-lg text-lg font-semibold transition-all duration-200 ${
+                className={`group relative overflow-hidden inline-flex items-center space-x-3 px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 transform ${
                   isDarkMode
-                    ? 'bg-blue-600 hover:bg-blue-700 text-white'
-                    : 'bg-blue-600 hover:bg-blue-700 text-white'
-                } hover:scale-105 shadow-lg hover:shadow-xl`}
+                    ? 'bg-blue-900/20 hover:bg-blue-900/30 text-blue-400 border-2 border-blue-700 hover:border-blue-500 shadow-lg shadow-blue-900/20 hover:shadow-blue-900/40'
+                    : 'bg-blue-50 hover:bg-blue-100 text-blue-700 border-2 border-blue-200 hover:border-blue-400 shadow-lg shadow-blue-500/10 hover:shadow-blue-500/20'
+                } hover:scale-105 hover:-translate-y-0.5`}
               >
-                <Code className="w-5 h-5" />
-                <span>Start Coding Challenges</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                {/* Subtle background animation */}
+                <div className={`absolute inset-0 transition-transform duration-500 group-hover:scale-110 ${
+                  isDarkMode 
+                    ? 'bg-gradient-to-r from-blue-800/10 to-indigo-800/10' 
+                    : 'bg-gradient-to-r from-blue-100/50 to-indigo-100/50'
+                }`}></div>
+                
+                {/* Content */}
+                <div className="relative flex items-center space-x-3">
+                  <div className={`p-2 rounded-lg transition-all duration-200 ${
+                    isDarkMode 
+                      ? 'bg-blue-800/30 group-hover:bg-blue-700/40' 
+                      : 'bg-blue-200/50 group-hover:bg-blue-300/60'
+                  }`}>
+                    <Code className="w-5 h-5 group-hover:rotate-6 transition-transform duration-200" />
+                  </div>
+                  <span className="font-bold">Start Coding Challenges</span>
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
+                </div>
+                
+                {/* Subtle accent */}
+                <div className={`absolute top-0 left-0 w-full h-0.5 transition-all duration-300 ${
+                  isDarkMode 
+                    ? ' from-blue-500 to-indigo-500 group-hover:h-1' 
+                    : ' from-blue-400 to-indigo-400 group-hover:h-1'
+                }`}></div>
               </button>
               
               <p className={`text-sm ${isDarkMode ? 'text-gray-500' : 'text-gray-500'}`}>

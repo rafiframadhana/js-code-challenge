@@ -132,6 +132,58 @@ export const challengeData: ChallengeData = {
             { input: "[]", expected: 0, description: "Empty array" },
             { input: "[null, undefined, 0, false]", expected: 4, description: "Falsy elements" }
           ]
+        },
+        {
+          id: "arr-9",
+          title: "Count Even Numbers",
+          description: "Write a function that counts how many even numbers are in an array.",
+          hint: "Use a counter variable and check each number with the modulo operator (%).",
+          starterCode: "function countEvens(arr) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "[1, 2, 3, 4, 5, 6]", expected: 3, description: "Three even numbers: 2, 4, 6" },
+            { input: "[1, 3, 5]", expected: 0, description: "No even numbers" },
+            { input: "[2, 4, 6, 8]", expected: 4, description: "All even numbers" },
+            { input: "[]", expected: 0, description: "Empty array" }
+          ]
+        },
+        {
+          id: "arr-10",
+          title: "Array Average",
+          description: "Write a function that calculates the average of numbers in an array.",
+          hint: "Sum all elements and divide by the array length. Handle empty arrays by returning 0.",
+          starterCode: "function arrayAverage(arr) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "[1, 2, 3, 4, 5]", expected: 3, description: "Average of 1-5 is 3" },
+            { input: "[10, 20, 30]", expected: 20, description: "Average of 10, 20, 30" },
+            { input: "[5]", expected: 5, description: "Single element" },
+            { input: "[]", expected: 0, description: "Empty array" }
+          ]
+        },
+        {
+          id: "arr-11",
+          title: "Second Largest Element",
+          description: "Write a function that finds the second largest element in an array of numbers.",
+          hint: "Keep track of the largest and second largest values while iterating through the array.",
+          starterCode: "function secondLargest(arr) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "[1, 5, 3, 9, 2]", expected: 5, description: "Second largest after 9" },
+            { input: "[10, 10, 5]", expected: 5, description: "Handle duplicates" },
+            { input: "[1, 2]", expected: 1, description: "Two elements" },
+            { input: "[5, 5, 5]", expected: undefined, description: "All same numbers" }
+          ]
+        },
+        {
+          id: "arr-12",
+          title: "Merge Two Arrays",
+          description: "Write a function that merges two arrays into one array alternating elements.",
+          hint: "Use a loop to take elements from both arrays alternately, then add any remaining elements.",
+          starterCode: "function mergeAlternating(arr1, arr2) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "[1, 2, 3], [4, 5, 6]", expected: [1, 4, 2, 5, 3, 6], description: "Equal length arrays" },
+            { input: "[1, 2], [3, 4, 5, 6]", expected: [1, 3, 2, 4, 5, 6], description: "First array shorter" },
+            { input: "[1, 2, 3], [4]", expected: [1, 4, 2, 3], description: "Second array shorter" },
+            { input: "[], [1, 2]", expected: [1, 2], description: "First array empty" }
+          ]
         }
       ],
       "Loops": [
@@ -225,6 +277,58 @@ export const challengeData: ChallengeData = {
             { input: "2", expected: [2], description: "Just 2" },
             { input: "1", expected: [], description: "No primes up to 1" }
           ]
+        },
+        {
+          id: "loop-8",
+          title: "Number Pattern",
+          description: "Write a function that creates a pattern of numbers from 1 to n, then back down to 1.",
+          hint: "Use two loops - one going up from 1 to n, and another going down from n-1 to 1.",
+          starterCode: "function numberPattern(n) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "3", expected: [1, 2, 3, 2, 1], description: "Pattern for n=3" },
+            { input: "4", expected: [1, 2, 3, 4, 3, 2, 1], description: "Pattern for n=4" },
+            { input: "1", expected: [1], description: "Pattern for n=1" },
+            { input: "2", expected: [1, 2, 1], description: "Pattern for n=2" }
+          ]
+        },
+        {
+          id: "loop-9",
+          title: "Sum of Even Numbers",
+          description: "Write a function that calculates the sum of all even numbers from 1 to n.",
+          hint: "Loop through numbers from 1 to n, check if each is even, and add to sum if it is.",
+          starterCode: "function sumEvens(n) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "6", expected: 12, description: "2 + 4 + 6 = 12" },
+            { input: "10", expected: 30, description: "2 + 4 + 6 + 8 + 10 = 30" },
+            { input: "1", expected: 0, description: "No even numbers up to 1" },
+            { input: "4", expected: 6, description: "2 + 4 = 6" }
+          ]
+        },
+        {
+          id: "loop-10",
+          title: "Count Digits",
+          description: "Write a function that counts the number of digits in a positive integer.",
+          hint: "Keep dividing the number by 10 until it becomes 0, counting each division.",
+          starterCode: "function countDigits(n) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "123", expected: 3, description: "Three digits" },
+            { input: "5", expected: 1, description: "Single digit" },
+            { input: "1000", expected: 4, description: "Four digits" },
+            { input: "99", expected: 2, description: "Two digits" }
+          ]
+        },
+        {
+          id: "loop-11",
+          title: "FizzBuzz Array",
+          description: "Write a function that returns an array of numbers from 1 to n, but replaces multiples of 3 with 'Fizz', multiples of 5 with 'Buzz', and multiples of both with 'FizzBuzz'.",
+          hint: "Check if number is divisible by both 3 and 5 first, then check 3, then 5, otherwise use the number.",
+          starterCode: "function fizzBuzz(n) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "15", expected: [1, 2, "Fizz", 4, "Buzz", "Fizz", 7, 8, "Fizz", "Buzz", 11, "Fizz", 13, 14, "FizzBuzz"], description: "FizzBuzz up to 15" },
+            { input: "5", expected: [1, 2, "Fizz", 4, "Buzz"], description: "FizzBuzz up to 5" },
+            { input: "3", expected: [1, 2, "Fizz"], description: "FizzBuzz up to 3" },
+            { input: "1", expected: [1], description: "FizzBuzz up to 1" }
+          ]
         }
       ],
       "Strings": [
@@ -291,6 +395,112 @@ export const challengeData: ChallengeData = {
             { input: "'Java Script'", expected: "JavaScript", description: "Remove space in middle" },
             { input: "'  test  '", expected: "test", description: "Remove leading and trailing spaces" },
             { input: "'nospaces'", expected: "nospaces", description: "No spaces to remove" }
+          ]
+        },
+        {
+          id: "str-6",
+          title: "Is Palindrome",
+          description: "Write a function that checks if a string is a palindrome (reads the same forwards and backwards).",
+          hint: "Compare the string with its reverse, or use two pointers from start and end moving inward.",
+          starterCode: "function isPalindrome(str) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "'racecar'", expected: true, description: "Classic palindrome" },
+            { input: "'hello'", expected: false, description: "Not a palindrome" },
+            { input: "'a'", expected: true, description: "Single character" },
+            { input: "'madam'", expected: true, description: "Another palindrome" }
+          ]
+        },
+        {
+          id: "str-7",
+          title: "Word Count",
+          description: "Write a function that counts the number of words in a string (words are separated by spaces).",
+          hint: "Split the string by spaces and count the resulting array length, or count the spaces plus one.",
+          starterCode: "function wordCount(str) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "'hello world'", expected: 2, description: "Two words" },
+            { input: "'JavaScript is awesome'", expected: 3, description: "Three words" },
+            { input: "'hello'", expected: 1, description: "Single word" },
+            { input: "''", expected: 0, description: "Empty string" }
+          ]
+        },
+        {
+          id: "str-8",
+          title: "Replace Character",
+          description: "Write a function that replaces all occurrences of one character with another character in a string.",
+          hint: "Loop through the string and build a new string, replacing the target character when found.",
+          starterCode: "function replaceChar(str, oldChar, newChar) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "'hello world', 'l', 'x'", expected: "hexxo worxd", description: "Replace all 'l' with 'x'" },
+            { input: "'banana', 'a', 'o'", expected: "bonono", description: "Replace all 'a' with 'o'" },
+            { input: "'test', 'z', 'y'", expected: "test", description: "Character not found" },
+            { input: "'aaa', 'a', 'b'", expected: "bbb", description: "Replace all same characters" }
+          ]
+        },
+        {
+          id: "str-9",
+          title: "String Contains",
+          description: "Write a function that checks if a string contains a specific substring.",
+          hint: "Use the includes() method or loop through the string checking for the substring at each position.",
+          starterCode: "function stringContains(str, substring) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "'hello world', 'world'", expected: true, description: "Substring found" },
+            { input: "'JavaScript', 'Script'", expected: true, description: "Substring at end" },
+            { input: "'hello', 'hi'", expected: false, description: "Substring not found" },
+            { input: "'test', 'test'", expected: true, description: "Exact match" }
+          ]
+        }
+      ],
+    "Basic Math": [
+        {
+          id: "math-1",
+          title: "Is Even or Odd",
+          description: "Write a function that determines if a number is even or odd. Return 'even' or 'odd'.",
+          hint: "Use the modulo operator (%) to check if the number is divisible by 2.",
+          starterCode: "function evenOrOdd(n) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "4", expected: "even", description: "4 is even" },
+            { input: "7", expected: "odd", description: "7 is odd" },
+            { input: "0", expected: "even", description: "0 is even" },
+            { input: "1", expected: "odd", description: "1 is odd" }
+          ]
+        },
+        {
+          id: "math-2",
+          title: "Simple Calculator",
+          description: "Write a function that performs basic arithmetic operations (+, -, *, /) on two numbers.",
+          hint: "Use a switch statement or if-else to handle different operations.",
+          starterCode: "function calculator(a, b, operation) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "5, 3, '+'", expected: 8, description: "5 + 3 = 8" },
+            { input: "10, 4, '-'", expected: 6, description: "10 - 4 = 6" },
+            { input: "6, 7, '*'", expected: 42, description: "6 * 7 = 42" },
+            { input: "15, 3, '/'", expected: 5, description: "15 / 3 = 5" }
+          ]
+        },
+        {
+          id: "math-3",
+          title: "Temperature Converter",
+          description: "Write a function that converts Celsius to Fahrenheit. Formula: F = (C * 9/5) + 32",
+          hint: "Apply the conversion formula: multiply by 9, divide by 5, then add 32.",
+          starterCode: "function celsiusToFahrenheit(celsius) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "0", expected: 32, description: "0°C = 32°F" },
+            { input: "100", expected: 212, description: "100°C = 212°F" },
+            { input: "25", expected: 77, description: "25°C = 77°F" },
+            { input: "-10", expected: 14, description: "-10°C = 14°F" }
+          ]
+        },
+        {
+          id: "math-4",
+          title: "Circle Area",
+          description: "Write a function that calculates the area of a circle given its radius. Formula: Area = π * r²",
+          hint: "Use Math.PI and Math.pow() or radius * radius for the calculation.",
+          starterCode: "function circleArea(radius) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "1", expected: Math.PI, description: "Area of circle with radius 1" },
+            { input: "2", expected: Math.PI * 4, description: "Area of circle with radius 2" },
+            { input: "0", expected: 0, description: "Area of circle with radius 0" },
+            { input: "5", expected: Math.PI * 25, description: "Area of circle with radius 5" }
           ]
         }
       ]
@@ -387,6 +597,42 @@ export const challengeData: ChallengeData = {
             { input: "{a: 1, b: 2}, 10", expected: {}, description: "No values meet threshold" },
             { input: "{}, 0", expected: {}, description: "Empty object" }
           ]
+        },
+        {
+          id: "obj-8",
+          title: "Deep Clone Object",
+          description: "Write a function that creates a deep copy of an object (including nested objects).",
+          hint: "Use JSON.parse(JSON.stringify()) for simple cases, or implement recursive cloning.",
+          starterCode: "function deepClone(obj) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "{a: 1, b: {c: 2}}", expected: {a: 1, b: {c: 2}}, description: "Clone nested object" },
+            { input: "{x: 10, y: 20}", expected: {x: 10, y: 20}, description: "Clone simple object" },
+            { input: "{}", expected: {}, description: "Clone empty object" },
+            { input: "{arr: [1, 2, 3]}", expected: {arr: [1, 2, 3]}, description: "Clone object with array" }
+          ]
+        },
+        {
+          id: "obj-9",
+          title: "Group Objects by Property",
+          description: "Write a function that groups an array of objects by a specific property value.",
+          hint: "Create an object where keys are property values and values are arrays of objects with that property.",
+          starterCode: "function groupBy(arr, property) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "[{name: 'John', age: 25}, {name: 'Jane', age: 25}, {name: 'Bob', age: 30}], 'age'", expected: {25: [{name: 'John', age: 25}, {name: 'Jane', age: 25}], 30: [{name: 'Bob', age: 30}]}, description: "Group by age" },
+            { input: "[{type: 'fruit', name: 'apple'}, {type: 'vegetable', name: 'carrot'}], 'type'", expected: {fruit: [{type: 'fruit', name: 'apple'}], vegetable: [{type: 'vegetable', name: 'carrot'}]}, description: "Group by type" }
+          ]
+        },
+        {
+          id: "obj-10",
+          title: "Object Validation",
+          description: "Write a function that validates if an object has all required properties with correct types.",
+          hint: "Check if each required property exists and has the correct type using typeof.",
+          starterCode: "function validateObject(obj, schema) {\n  // Your code here\n  // schema format: {property: 'type'}\n}",
+          testCases: [
+            { input: "{name: 'John', age: 25}, {name: 'string', age: 'number'}", expected: true, description: "Valid object" },
+            { input: "{name: 'John'}, {name: 'string', age: 'number'}", expected: false, description: "Missing property" },
+            { input: "{name: 'John', age: '25'}, {name: 'string', age: 'number'}", expected: false, description: "Wrong type" }
+          ]
         }
       ],
       "Functions": [
@@ -428,6 +674,36 @@ export const challengeData: ChallengeData = {
           starterCode: "function partial(fn, ...args1) {\n  // Your code here\n  \n}",
           testCases: [
             { input: "(a, b, c) => a + b + c, 1, 2", expected: "function", description: "Should return a function" },
+          ]
+        },
+        {
+          id: "func-5",
+          title: "Debounce Function",
+          description: "Write a function that creates a debounced version of another function (delays execution until after a specified time).",
+          hint: "Use setTimeout and clearTimeout to delay function execution and cancel previous timeouts.",
+          starterCode: "function debounce(func, delay) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "() => console.log('called'), 100", expected: "function", description: "Should return a function" }
+          ]
+        },
+        {
+          id: "func-6",
+          title: "Throttle Function",
+          description: "Write a function that creates a throttled version of another function (limits execution to once per time period).",
+          hint: "Track the last execution time and only execute if enough time has passed.",
+          starterCode: "function throttle(func, limit) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "() => console.log('called'), 100", expected: "function", description: "Should return a function" }
+          ]
+        },
+        {
+          id: "func-7",
+          title: "Function Pipeline",
+          description: "Write a function that creates a pipeline of functions, where output of one becomes input of next.",
+          hint: "Use reduce to apply each function in sequence to the input value.",
+          starterCode: "function pipeline(...functions) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "(x => x + 1), (x => x * 2), (x => x - 3)", expected: "function", description: "Should return a function" }
           ]
         }
       ],
@@ -509,6 +785,44 @@ export const challengeData: ChallengeData = {
             { input: "'a'", expected: true, description: "Single character" },
             { input: "'madam'", expected: true, description: "Another palindrome" }
           ]
+        },
+        {
+          id: "rec-7",
+          title: "Binary Tree Height",
+          description: "Write a recursive function that calculates the height of a binary tree.",
+          hint: "Height is 1 + maximum height of left and right subtrees. Base case: null node has height 0.",
+          starterCode: "function treeHeight(node) {\n  // node structure: {val, left, right}\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "null", expected: 0, description: "Empty tree" },
+            { input: "{val: 1, left: null, right: null}", expected: 1, description: "Single node" },
+            { input: "{val: 1, left: {val: 2, left: null, right: null}, right: {val: 3, left: null, right: null}}", expected: 2, description: "Tree with two levels" }
+          ]
+        },
+        {
+          id: "rec-8",
+          title: "Generate Permutations",
+          description: "Write a recursive function that generates all permutations of an array.",
+          hint: "For each element, generate permutations of remaining elements and prepend the current element.",
+          starterCode: "function permutations(arr) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "[1, 2]", expected: [[1, 2], [2, 1]], description: "Permutations of [1,2]" },
+            { input: "[1, 2, 3]", expected: [[1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], [3,2,1]], description: "Permutations of [1,2,3]" },
+            { input: "[]", expected: [[]], description: "Empty array" },
+            { input: "[1]", expected: [[1]], description: "Single element" }
+          ]
+        },
+        {
+          id: "rec-9",
+          title: "Count Paths in Grid",
+          description: "Count the number of unique paths from top-left to bottom-right in an m×n grid (can only move right or down).",
+          hint: "Paths to current cell = paths from cell above + paths from cell to the left.",
+          starterCode: "function countPaths(m, n) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "2, 2", expected: 2, description: "2x2 grid has 2 paths" },
+            { input: "3, 2", expected: 3, description: "3x2 grid has 3 paths" },
+            { input: "3, 3", expected: 6, description: "3x3 grid has 6 paths" },
+            { input: "1, 1", expected: 1, description: "1x1 grid has 1 path" }
+          ]
         }
       ],
       "Array Methods": [
@@ -562,6 +876,86 @@ export const challengeData: ChallengeData = {
             { input: "['apple', 'banana', 'cherry'], x => x.startsWith('b')", expected: "banana", description: "Find string starting with 'b'" },
             { input: "[1, 2, 3], x => x > 10", expected: undefined, description: "No element found" },
             { input: "[], x => true", expected: undefined, description: "Empty array" }
+          ]
+        },
+       {
+          id: "arr-methods-5",
+          title: "Custom Some Function",
+          description: "Implement your own version of Array.some() that tests whether at least one element passes a test.",
+          hint: "Return true as soon as any element passes the test, return false if none do.",
+          starterCode: "function customSome(arr, callback) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "[1, 2, 3, 4], x => x > 3", expected: true, description: "At least one element > 3" },
+            { input: "[1, 2, 3], x => x > 5", expected: false, description: "No elements > 5" },
+            { input: "[], x => true", expected: false, description: "Empty array" },
+            { input: "['a', 'b', 'c'], x => x === 'b'", expected: true, description: "String found" }
+          ]
+        },
+        {
+          id: "arr-methods-6",
+          title: "Custom Every Function",
+          description: "Implement your own version of Array.every() that tests whether all elements pass a test.",
+          hint: "Return false as soon as any element fails the test, return true if all pass.",
+          starterCode: "function customEvery(arr, callback) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "[2, 4, 6, 8], x => x % 2 === 0", expected: true, description: "All elements are even" },
+            { input: "[1, 2, 3, 4], x => x > 0", expected: true, description: "All elements > 0" },
+            { input: "[1, 2, 3], x => x > 2", expected: false, description: "Not all elements > 2" },
+            { input: "[], x => false", expected: true, description: "Empty array" }
+          ]
+        },
+        {
+          id: "arr-methods-7",
+          title: "Chunk Array",
+          description: "Write a function that splits an array into chunks of a specified size.",
+          hint: "Use a loop to slice the array at regular intervals based on the chunk size.",
+          starterCode: "function chunkArray(arr, size) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "[1, 2, 3, 4, 5, 6], 2", expected: [[1, 2], [3, 4], [5, 6]], description: "Chunk into pairs" },
+            { input: "[1, 2, 3, 4, 5], 3", expected: [[1, 2, 3], [4, 5]], description: "Uneven chunks" },
+            { input: "[1, 2, 3], 5", expected: [[1, 2, 3]], description: "Size larger than array" },
+            { input: "[], 2", expected: [], description: "Empty array" }
+          ]
+        }
+      ],
+      "Regular Expressions": [
+        {
+          id: "regex-1",
+          title: "Email Validator",
+          description: "Write a function that validates if a string is a valid email format using regex.",
+          hint: "Check for pattern: characters@characters.characters (simplified validation).",
+          starterCode: "function isValidEmail(email) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "'user@example.com'", expected: true, description: "Valid email" },
+            { input: "'invalid.email'", expected: false, description: "Missing @ and domain" },
+            { input: "'user@domain'", expected: false, description: "Missing .extension" },
+            { input: "'user@example.co.uk'", expected: true, description: "Valid with subdomain" }
+          ]
+        },
+        {
+          id: "regex-2",
+          title: "Phone Number Formatter",
+          description: "Write a function that formats a 10-digit phone number as (XXX) XXX-XXXX.",
+          hint: "Use regex to capture groups of digits and replace with formatted pattern.",
+          starterCode: "function formatPhoneNumber(phone) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "'1234567890'", expected: "(123) 456-7890", description: "Format 10 digits" },
+            { input: "'5551234567'", expected: "(555) 123-4567", description: "Another valid number" },
+            { input: "'123'", expected: "Invalid phone number", description: "Too few digits" },
+            { input: "'12345678901'", expected: "Invalid phone number", description: "Too many digits" }
+          ]
+        },
+        {
+          id: "regex-3",
+          title: "Extract Numbers",
+          description: "Write a function that extracts all numbers from a string and returns them as an array.",
+          hint: "Use regex with global flag to find all number patterns in the string.",
+          starterCode: "function extractNumbers(str) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "'I have 5 apples and 10 oranges'", expected: ['5', '10'], description: "Extract multiple numbers" },
+            { input: "'Price: $19.99'", expected: ['19', '99'], description: "Extract from price" },
+            { input: "'No numbers here!'", expected: [], description: "No numbers found" },
+            { input: "'Year 2023 was great!'", expected: ['2023'], description: "Extract year" }
           ]
         }
       ]

@@ -136,6 +136,7 @@ export default function App() {
                       challenge={selectedChallenge}
                       isCompleted={isCompleted(selectedChallenge.id)}
                       isDarkMode={isDarkMode}
+                      onChallengeSelect={handleChallengeSelect}
                     />
                   </div>
                 </div>

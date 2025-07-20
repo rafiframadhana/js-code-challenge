@@ -1,26 +1,54 @@
-import { useState } from 'react';
-import { Lightbulb, CheckCircle } from 'lucide-react';
-import type { Challenge } from '../data/challenges';
-import HintModal from './HintModal';
-import DifficultyTag from './DifficultyTag';
-import { getChallengeDifficulty } from '../utils/challengeUtils';
+import { useState } from "react";
+import { Lightbulb, CheckCircle, ArrowRight, ArrowLeft } from "lucide-react";
+import type { Challenge } from "../data/challenges";
+import HintModal from "./HintModal";
+import DifficultyTag from "./DifficultyTag";
+import {
+  getChallengeDifficulty,
+  findNextChallenge,
+  findPrevChallenge,
+} from "../utils/challengeUtils";
 
 interface QuestionDisplayProps {
   challenge: Challenge;
   isCompleted: boolean;
   isDarkMode: boolean;
+  onChallengeSelect: (challenge: Challenge) => void;
 }
 
-export default function QuestionDisplay({ challenge, isCompleted, isDarkMode }: QuestionDisplayProps) {
+export default function QuestionDisplay({
+  challenge,
+  isCompleted,
+  isDarkMode,
+  onChallengeSelect,
+}: QuestionDisplayProps) {
   const [showHint, setShowHint] = useState(false);
   const difficulty = getChallengeDifficulty(challenge);
+  const nextChallenge = findNextChallenge(challenge);
+  const prevChallenge = findPrevChallenge(challenge);
+
+  const handleNextChallenge = () => {
+    if (nextChallenge) {
+      onChallengeSelect(nextChallenge);
+    }
+  };
+
+  const handlePrevChallenge = () => {
+    if (prevChallenge) {
+      onChallengeSelect(prevChallenge);
+    }
+  };
 
   return (
     <div className="space-y-4 lg:space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between space-y-3 sm:space-y-0">
         <div className="flex-1">
           <div className="flex items-center space-x-3 mb-3 flex-wrap gap-2">
-            <h1 className={`text-xl lg:text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+            <h1
+              className={`text-xl lg:text-2xl font-bold ${
+                isDarkMode ? "text-white" : "text-gray-900"
+              }`}
+            >
               {challenge.title}
             </h1>
             <div className="flex items-center space-x-2">
@@ -32,27 +60,34 @@ export default function QuestionDisplay({ challenge, isCompleted, isDarkMode }: 
               )}
             </div>
           </div>
-          <p className={`text-base lg:text-lg leading-relaxed ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+          <p
+            className={`text-base lg:text-lg leading-relaxed ${
+              isDarkMode ? "text-gray-300" : "text-gray-600"
+            }`}
+          >
             {challenge.description}
           </p>
         </div>
-        
         <button
           onClick={() => setShowHint(true)}
-          className={`flex items-center justify-center space-x-2 px-3 lg:px-4 py-2 rounded-lg transition-colors self-start sm:self-auto ${
+          className={`flex items-center justify-center space-x-1 px-3 lg:px-4 py-2 rounded-lg transition-colors self-start sm:self-auto ${
             isDarkMode
-              ? 'bg-yellow-900/20 hover:bg-yellow-900/30 text-yellow-400 border border-yellow-700'
-              : 'bg-yellow-50 hover:bg-yellow-100 text-yellow-700 border border-yellow-200'
+              ? "bg-yellow-900/20 hover:bg-yellow-900/30 text-yellow-400 border border-yellow-700"
+              : "bg-yellow-50 hover:bg-yellow-100 text-yellow-700 border border-yellow-200"
           }`}
         >
           <Lightbulb className="w-4 h-4" />
-          <span className="text-sm font-medium">Hint</span>
+          <span className="text-sm font-medium"> Hint</span>
         </button>
       </div>
 
       {/* Test Cases Preview */}
       <div className="space-y-3">
-        <h3 className={`font-semibold ${isDarkMode ? 'text-gray-200' : 'text-gray-700'}`}>
+        <h3
+          className={`font-semibold ${
+            isDarkMode ? "text-gray-200" : "text-gray-700"
+          }`}
+        >
           Example Test Cases
         </h3>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
@@ -61,29 +96,49 @@ export default function QuestionDisplay({ challenge, isCompleted, isDarkMode }: 
               key={index}
               className={`p-4 rounded-lg border ${
                 isDarkMode
-                  ? 'bg-gray-800 border-gray-700'
-                  : 'bg-gray-50 border-gray-200'
+                  ? "bg-gray-800 border-gray-700"
+                  : "bg-gray-50 border-gray-200"
               }`}
             >
               <div className="space-y-2">
                 <div className="text-sm">
-                  <span className={`font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                  <span
+                    className={`font-medium ${
+                      isDarkMode ? "text-gray-300" : "text-gray-600"
+                    }`}
+                  >
                     Input:
                   </span>
-                  <code className={`ml-2 font-mono ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`}>
+                  <code
+                    className={`ml-2 font-mono ${
+                      isDarkMode ? "text-blue-400" : "text-blue-600"
+                    }`}
+                  >
                     {testCase.input}
                   </code>
                 </div>
                 <div className="text-sm">
-                  <span className={`font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                  <span
+                    className={`font-medium ${
+                      isDarkMode ? "text-gray-300" : "text-gray-600"
+                    }`}
+                  >
                     Expected:
                   </span>
-                  <code className={`ml-2 font-mono ${isDarkMode ? 'text-green-400' : 'text-green-600'}`}>
+                  <code
+                    className={`ml-2 font-mono ${
+                      isDarkMode ? "text-green-400" : "text-green-600"
+                    }`}
+                  >
                     {JSON.stringify(testCase.expected)}
                   </code>
                 </div>
                 {testCase.description && (
-                  <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                  <div
+                    className={`text-xs ${
+                      isDarkMode ? "text-gray-400" : "text-gray-500"
+                    }`}
+                  >
                     {testCase.description}
                   </div>
                 )}
@@ -92,9 +147,50 @@ export default function QuestionDisplay({ challenge, isCompleted, isDarkMode }: 
           ))}
         </div>
         {challenge.testCases.length > 2 && (
-          <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+          <p
+            className={`text-sm ${
+              isDarkMode ? "text-gray-400" : "text-gray-500"
+            }`}
+          >
             + {challenge.testCases.length - 2} more test cases will be evaluated
           </p>
+        )}
+      </div>
+
+      {/* Navigation buttons at the bottom */}
+      <div className="flex justify-between items-center pt-4 border-t border-gray-200 dark:border-gray-700">
+        {prevChallenge ? (
+          <button
+            onClick={handlePrevChallenge}
+            className={`flex items-center justify-center space-x-2 px-3 lg:px-4 py-2 rounded-lg transition-colors ${
+              isDarkMode
+                ? "bg-blue-900/20 hover:bg-blue-900/30 text-blue-400 border border-blue-700"
+                : "bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200"
+            }`}
+            title={`Previous: ${prevChallenge.title}`}
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span className="text-sm font-medium">Previous</span>
+          </button>
+        ) : (
+          <div></div>
+        )}
+
+        {nextChallenge ? (
+          <button
+            onClick={handleNextChallenge}
+            className={`flex items-center justify-center space-x-2 px-3 lg:px-4 py-2 rounded-lg transition-colors ${
+              isDarkMode
+                ? "bg-blue-900/20 hover:bg-blue-900/30 text-blue-400 border border-blue-700"
+                : "bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200"
+            }`}
+            title={`Next: ${nextChallenge.title}`}
+          >
+            <span className="text-sm font-medium">Next</span>
+            <ArrowRight className="w-4 h-4" />
+          </button>
+        ) : (
+          <div></div>
         )}
       </div>
 
