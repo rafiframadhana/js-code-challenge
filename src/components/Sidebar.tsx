@@ -67,25 +67,12 @@ export default function Sidebar({ selectedChallenge, onChallengeSelect, complete
   };
 
   return (
-    <React.Fragment>
-      {/* Mobile Backdrop */}
-      {isMobileOpen && (
-        <div 
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
-          onClick={onMobileClose}
-        />
-      )}
-      
-      {/* Sidebar */}
-      <div className={`
-        ${isMobileOpen ? 'translate-x-0' : '-translate-x-full'} 
-        lg:translate-x-0 lg:static lg:w-80 
-        fixed inset-y-0 left-0 z-50 
-        w-80 h-full 
-        ${isDarkMode ? 'bg-gray-900 border-gray-700' : 'bg-white border-gray-200'} 
-        border-r overflow-y-auto transition-transform duration-300 ease-in-out
-      `}>
-        <div className="p-4 lg:p-6">
+    <div className={`
+      w-80 h-full sidebar-scrollable
+      ${isDarkMode ? 'bg-gray-900 border-gray-700' : 'bg-white border-gray-200'} 
+      border-r overflow-y-auto
+    `}>
+      <div className="p-4 lg:p-6">
           <h2 className={`text-lg lg:text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-4 lg:mb-6`}>
             Coding Challenges
           </h2>
@@ -192,8 +179,7 @@ export default function Sidebar({ selectedChallenge, onChallengeSelect, complete
             );
           })}
         </div>
-        </div>
       </div>
-    </React.Fragment>
+    </div>
   );
 }

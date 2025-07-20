@@ -10,7 +10,9 @@ interface HeaderProps {
   onSoundToggle: () => void;
   onLogoClick?: () => void;
   onMobileSidebarToggle?: () => void;
+  onDesktopSidebarToggle?: () => void;
   showMobileSidebarToggle?: boolean;
+  showDesktopSidebarToggle?: boolean;
 }
 
 export default function Header({
@@ -20,7 +22,9 @@ export default function Header({
   onSoundToggle,
   onLogoClick,
   onMobileSidebarToggle,
+  onDesktopSidebarToggle,
   showMobileSidebarToggle,
+  showDesktopSidebarToggle,
 }: HeaderProps) {
   const { resetProgress } = useProgress();
   const [showResetModal, setShowResetModal] = useState(false);
@@ -120,6 +124,21 @@ export default function Header({
                 <Moon className="w-5 h-5" />
               )}
             </button>
+
+            {/* Desktop Sidebar Toggle */}
+            {showDesktopSidebarToggle && (
+              <button
+                onClick={onDesktopSidebarToggle}
+                className={`hidden lg:block p-2 rounded-md transition-colors ${
+                  isDarkMode
+                    ? "bg-gray-700 hover:bg-gray-600 text-gray-300"
+                    : "bg-gray-100 hover:bg-gray-200 text-gray-600"
+                }`}
+                title="Toggle sidebar"
+              >
+                <Menu className="w-5 h-5" />
+              </button>
+            )}
 
             {/* Mobile Sidebar Toggle */}
             {showMobileSidebarToggle && (

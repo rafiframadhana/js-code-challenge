@@ -1,5 +1,5 @@
-import React from 'react';
-import { X, Lightbulb } from 'lucide-react';
+import React from "react";
+import { X, Lightbulb } from "lucide-react";
 
 interface HintModalProps {
   isOpen: boolean;
@@ -8,25 +8,38 @@ interface HintModalProps {
   isDarkMode: boolean;
 }
 
-export default function HintModal({ isOpen, onClose, hint, isDarkMode }: HintModalProps) {
+export default function HintModal({
+  isOpen,
+  onClose,
+  hint,
+  isDarkMode,
+}: HintModalProps) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="modal-overlay fixed inset-0 z-50 flex items-center justify-center">
       {/* Backdrop */}
-      <div 
-        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+      <div
+        className="fixed inset-0 w-full h-full bg-black/50 backdrop-blur-sm"
         onClick={onClose}
       />
-      
+
       {/* Modal */}
-      <div className={`relative w-full max-w-md mx-4 p-6 rounded-xl shadow-xl ${
-        isDarkMode ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-200'
-      }`}>
+      <div
+        className={`relative z-[50] w-full max-w-md mx-4 p-6 rounded-xl shadow-xl transform -translate-y-6 ${
+          isDarkMode
+            ? "bg-gray-800 border border-gray-700"
+            : "bg-white border border-gray-200"
+        }`}
+      >
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-2">
             <Lightbulb className="w-5 h-5 text-yellow-500" />
-            <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+            <h3
+              className={`text-lg font-semibold ${
+                isDarkMode ? "text-white" : "text-gray-900"
+              }`}
+            >
               Hint
             </h3>
           </div>
@@ -34,18 +47,22 @@ export default function HintModal({ isOpen, onClose, hint, isDarkMode }: HintMod
             onClick={onClose}
             className={`p-1 rounded-md transition-colors ${
               isDarkMode
-                ? 'hover:bg-gray-700 text-gray-400 hover:text-gray-200'
-                : 'hover:bg-gray-100 text-gray-500 hover:text-gray-700'
+                ? "hover:bg-gray-700 text-gray-400 hover:text-gray-200"
+                : "hover:bg-gray-100 text-gray-500 hover:text-gray-700"
             }`}
           >
             <X className="w-5 h-5" />
           </button>
         </div>
-        
-        <p className={`leading-relaxed ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+
+        <p
+          className={`leading-relaxed ${
+            isDarkMode ? "text-gray-300" : "text-gray-600"
+          }`}
+        >
           {hint}
         </p>
-        
+
         <div className="mt-6 flex justify-end">
           <button
             onClick={onClose}
