@@ -43,7 +43,7 @@ export default function LandingPage({ isDarkMode, onGetStarted }: LandingPagePro
             <div className="space-y-4">
               <button
                 onClick={onGetStarted}
-                className={`group relative overflow-hidden inline-flex items-center space-x-3 px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 transform ${
+                className={`group relative overflow-hidden inline-flex items-center space-x-2 px-3 py-3 rounded-lg text-lg font-semibold transition-all duration-300 transform ${
                   isDarkMode
                     ? 'bg-blue-900/20 hover:bg-blue-900/30 text-blue-400 border-2 border-blue-700 hover:border-blue-500 shadow-lg shadow-blue-900/20 hover:shadow-blue-900/40'
                     : 'bg-blue-50 hover:bg-blue-100 text-blue-700 border-2 border-blue-200 hover:border-blue-400 shadow-lg shadow-blue-500/10 hover:shadow-blue-500/20'
