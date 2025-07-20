@@ -7,6 +7,7 @@ import Footer from './components/Footer';
 import LandingPage from './components/LandingPage';
 import { useTheme } from './hooks/useTheme';
 import { useProgress } from './hooks/useProgress';
+import { useSound } from './hooks/useSound';
 import { challengeData } from './data/challenges';
 import type { Challenge } from './data/challenges';
 
@@ -22,6 +23,7 @@ interface TestResult {
 export default function App() {
   const { isDarkMode, toggleTheme } = useTheme();
   const { completedChallenges, markCompleted, isCompleted } = useProgress();
+  const { isSoundOn, toggleSound } = useSound();
   const [selectedChallenge, setSelectedChallenge] = useState<Challenge | null>(null);
   const [showLanding, setShowLanding] = useState(true);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
@@ -62,6 +64,8 @@ export default function App() {
       <Header 
         isDarkMode={isDarkMode} 
         onThemeToggle={toggleTheme} 
+        isSoundOn={isSoundOn}
+        onSoundToggle={toggleSound}
         onLogoClick={handleLogoClick} 
         onMobileSidebarToggle={toggleMobileSidebar}
         showMobileSidebarToggle={!showLanding}
@@ -102,6 +106,7 @@ export default function App() {
                       challenge={selectedChallenge}
                       onCodeEvaluate={handleCodeEvaluate}
                       isDarkMode={isDarkMode}
+                      isSoundOn={isSoundOn}
                     />
                   </div>
                 </div>

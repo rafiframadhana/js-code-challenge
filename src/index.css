@@ -1,3 +1,35 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* CodeMirror mobile optimizations */
+.cm-editor {
+  font-size: 14px !important;
+  line-height: 1.4 !important;
+}
+
+.cm-editor .cm-content {
+  padding: 8px !important;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace !important;
+}
+
+.cm-editor .cm-focused {
+  outline: none !important;
+}
+
+.cm-editor .cm-scroller {
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace !important;
+}
+
+/* Better touch targets on mobile */
+@media (max-width: 1024px) and (pointer: coarse) {
+  .cm-editor .cm-content {
+    padding: 12px !important;
+    min-height: 300px !important;
+  }
+  
+  .cm-editor {
+    font-size: 14px !important; /* Prevents zoom on iOS */
+    line-height: 1.5 !important;
+  }
+}
