@@ -294,7 +294,7 @@ export default function CodeEditor({
         sound.play().catch((err) => {
           console.error("Failed to play sound:", err);
         });
-        sound.volume = isSoundOn ? 0.5 : 0;
+        sound.volume = isSoundOn ? 1 : 0;
       }
     }
   };

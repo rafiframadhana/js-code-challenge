@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import QuestionDisplay from './components/QuestionDisplay';
 import CodeEditor from './components/CodeEditor';
 import Footer from './components/Footer';
 import LandingPage from './components/LandingPage';
+import LevelSelectionModal from './components/LevelSelectionModal';
 import { useTheme } from './hooks/useTheme';
 import { useProgress } from './hooks/useProgress';
 import { useSound } from './hooks/useSound';
@@ -15,8 +16,8 @@ import type { Challenge } from './data/challenges';
 interface TestResult {
   passed: boolean;
   input: string;
-  expected: any;
-  actual: any;
+  expected: unknown;
+  actual: unknown;
   error?: string;
   description?: string;
 }
@@ -28,18 +29,42 @@ export default function App() {
   const isMobile = useDeviceType();
   const [selectedChallenge, setSelectedChallenge] = useState<Challenge | null>(null);
   const [showLanding, setShowLanding] = useState(true);
+  const [showLevelModal, setShowLevelModal] = useState(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [isDesktopSidebarOpen, setIsDesktopSidebarOpen] = useState(() => {
     const stored = localStorage.getItem('desktopSidebarOpen');
     return stored !== null ? JSON.parse(stored) : false; // Default to closed
   });
 
-  // Don't auto-select first challenge on load anymore since we start with landing page
+  // Find the first uncompleted challenge in a specific level
+  const findFirstUncompletedChallenge = (levelName: string): Challenge | null => {
+    const level = challengeData.levels[levelName];
+    if (!level) return null;
+
+    // Iterate through all topics in the level
+    for (const topicName in level) {
+      const challenges = level[topicName];
+      for (const challenge of challenges) {
+        if (!isCompleted(challenge.id)) {
+          return challenge;
+        }
+      }
+    }
+
+    // If all challenges are completed, return the first challenge
+    const firstTopic = Object.keys(level)[0];
+    return level[firstTopic]?.[0] || null;
+  };
+
   const handleGetStarted = () => {
-    setShowLanding(false);
-    if (!selectedChallenge) {
-      const firstChallenge = challengeData.levels.Beginner.Arrays[0];
+    setShowLevelModal(true);
+  };
+
+  const handleLevelSelect = (levelName: string) => {
+    const firstChallenge = findFirstUncompletedChallenge(levelName);
+    if (firstChallenge) {
       setSelectedChallenge(firstChallenge);
+      setShowLanding(false);
     }
   };
 
@@ -59,7 +84,7 @@ export default function App() {
     localStorage.setItem('desktopSidebarOpen', JSON.stringify(newState));
   };
 
-  const handleCodeEvaluate = (code: string, results: TestResult[]) => {
+  const handleCodeEvaluate = (_code: string, results: TestResult[]) => {
     if (selectedChallenge && results.length > 0 && results.every(r => r.passed)) {
       markCompleted(selectedChallenge.id);
     }
@@ -87,6 +112,7 @@ export default function App() {
         onDesktopSidebarToggle={toggleDesktopSidebar}
         showMobileSidebarToggle={!showLanding}
         showDesktopSidebarToggle={!showLanding}
+        showUtilityButtons={!showLanding}
       />
       
       {showLanding ? (
@@ -171,6 +197,14 @@ export default function App() {
           )}
         </div>
       )}
+      
+      {/* Level Selection Modal */}
+      <LevelSelectionModal
+        isOpen={showLevelModal}
+        onClose={() => setShowLevelModal(false)}
+        onLevelSelect={handleLevelSelect}
+        isDarkMode={isDarkMode}
+      />
       
       <Footer isDarkMode={isDarkMode} />
     </div>

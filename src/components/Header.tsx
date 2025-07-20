@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Moon, Sun, RotateCcw, Menu, Volume2, VolumeX } from "lucide-react";
 import { useProgress } from "../hooks/useProgress";
 import ConfirmModal from "./ConfirmModal";
@@ -13,6 +13,7 @@ interface HeaderProps {
   onDesktopSidebarToggle?: () => void;
   showMobileSidebarToggle?: boolean;
   showDesktopSidebarToggle?: boolean;
+  showUtilityButtons?: boolean; // New prop to control progress/sound buttons
 }
 
 export default function Header({
@@ -25,6 +26,7 @@ export default function Header({
   onDesktopSidebarToggle,
   showMobileSidebarToggle,
   showDesktopSidebarToggle,
+  showUtilityButtons = true, // Default to true for backward compatibility
 }: HeaderProps) {
   const { resetProgress } = useProgress();
   const [showResetModal, setShowResetModal] = useState(false);
@@ -78,36 +80,41 @@ export default function Header({
           </div>
 
           <div className="flex items-center space-x-2 sm:space-x-3">
-            <button
-              onClick={handleResetProgress}
-              className={`flex items-center space-x-1 sm:space-x-2 px-2 sm:px-3 py-2 rounded-lg transition-colors ${
-                isDarkMode
-                  ? "bg-gray-700 hover:bg-gray-600 text-gray-300"
-                  : "bg-gray-100 hover:bg-gray-200 text-gray-600"
-              }`}
-              title="Reset all progress"
-            >
-              <RotateCcw className="md:w-4 md:h-4 w-5 h-5" />
-              <span className="text-xs sm:text-sm hidden sm:inline">
-                Reset Progress
-              </span>
-            </button>
+            {/* Utility buttons - only show when not on landing page */}
+            {showUtilityButtons && (
+              <>
+                <button
+                  onClick={handleResetProgress}
+                  className={`flex items-center space-x-1 sm:space-x-2 px-2 sm:px-3 py-2 rounded-lg transition-colors ${
+                    isDarkMode
+                      ? "bg-gray-700 hover:bg-gray-600 text-gray-300"
+                      : "bg-gray-100 hover:bg-gray-200 text-gray-600"
+                  }`}
+                  title="Reset all progress"
+                >
+                  <RotateCcw className="md:w-4 md:h-4 w-5 h-5" />
+                  <span className="text-xs sm:text-sm hidden sm:inline">
+                    Reset Progress
+                  </span>
+                </button>
 
-            <button
-              onClick={onSoundToggle}
-              className={`p-2 rounded-lg transition-colors ${
-                isDarkMode
-                  ? "bg-gray-700 hover:bg-gray-600 text-gray-300"
-                  : "bg-gray-100 hover:bg-gray-200 text-gray-600"
-              }`}
-              title={`Turn sound ${isSoundOn ? "off" : "on"}`}
-            >
-              {isSoundOn ? (
-                <Volume2 className="w-5 h-5" />
-              ) : (
-                <VolumeX className="w-5 h-5" />
-              )}
-            </button>
+                <button
+                  onClick={onSoundToggle}
+                  className={`p-2 rounded-lg transition-colors ${
+                    isDarkMode
+                      ? "bg-gray-700 hover:bg-gray-600 text-gray-300"
+                      : "bg-gray-100 hover:bg-gray-200 text-gray-600"
+                  }`}
+                  title={`Turn sound ${isSoundOn ? "off" : "on"}`}
+                >
+                  {isSoundOn ? (
+                    <Volume2 className="w-5 h-5" />
+                  ) : (
+                    <VolumeX className="w-5 h-5" />
+                  )}
+                </button>
+              </>
+            )}
 
             <button
               onClick={onThemeToggle}
