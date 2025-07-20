@@ -8,27 +8,27 @@ export default function DifficultyTag({ level, isDarkMode }: DifficultyTagProps)
     switch (difficulty.toLowerCase()) {
       case 'beginner':
         return {
-          bg: isDarkMode ? 'bg-green-900/30' : 'bg-green-100',
-          border: isDarkMode ? 'border-green-700' : 'border-green-300',
-          text: isDarkMode ? 'text-green-400' : 'text-green-700',
+          bg: isDarkMode ? 'bg-green-900/30' : 'bg-green-200',
+          border: isDarkMode ? 'border-green-700' : 'border-green-400',
+          text: isDarkMode ? 'text-green-400' : 'text-green-800',
         };
       case 'intermediate':
         return {
-          bg: isDarkMode ? 'bg-yellow-900/30' : 'bg-yellow-100',
-          border: isDarkMode ? 'border-yellow-700' : 'border-yellow-300',
-          text: isDarkMode ? 'text-yellow-400' : 'text-yellow-700',
+          bg: isDarkMode ? 'bg-yellow-900/30' : 'bg-yellow-200',
+          border: isDarkMode ? 'border-yellow-700' : 'border-yellow-400',
+          text: isDarkMode ? 'text-yellow-400' : 'text-yellow-800',
         };
       case 'advanced':
         return {
-          bg: isDarkMode ? 'bg-red-900/30' : 'bg-red-100',
-          border: isDarkMode ? 'border-red-700' : 'border-red-300',
-          text: isDarkMode ? 'text-red-400' : 'text-red-700',
+          bg: isDarkMode ? 'bg-red-900/30' : 'bg-red-200',
+          border: isDarkMode ? 'border-red-700' : 'border-red-400',
+          text: isDarkMode ? 'text-red-400' : 'text-red-800',
         };
       default:
         return {
-          bg: isDarkMode ? 'bg-gray-800' : 'bg-gray-100',
-          border: isDarkMode ? 'border-gray-600' : 'border-gray-300',
-          text: isDarkMode ? 'text-gray-400' : 'text-gray-600',
+          bg: isDarkMode ? 'bg-gray-800' : 'bg-gray-200',
+          border: isDarkMode ? 'border-gray-600' : 'border-gray-400',
+          text: isDarkMode ? 'text-gray-400' : 'text-gray-700',
         };
     }
   };

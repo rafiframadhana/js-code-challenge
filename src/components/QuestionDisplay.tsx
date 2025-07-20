@@ -63,7 +63,7 @@ export default function QuestionDisplay({
           </div>
           <p
             className={`text-base lg:text-lg leading-relaxed ${
-              isDarkMode ? "text-gray-300" : "text-gray-600"
+              isDarkMode ? "text-gray-300" : "text-gray-700"
             }`}
           >
             {challenge.description}
@@ -74,7 +74,7 @@ export default function QuestionDisplay({
           className={`flex items-center justify-center space-x-1 px-3 lg:px-4 py-2 rounded-lg transition-colors self-start sm:self-auto ${
             isDarkMode
               ? "bg-yellow-900/20 hover:bg-yellow-900/30 text-yellow-400 border border-yellow-700"
-              : "bg-yellow-50 hover:bg-yellow-100 text-yellow-700 border border-yellow-200"
+              : "bg-yellow-100 hover:bg-yellow-200 text-yellow-800 border border-yellow-300"
           }`}
         >
           <Lightbulb className="w-4 h-4" />
@@ -86,7 +86,7 @@ export default function QuestionDisplay({
       <div className="space-y-3">
         <h3
           className={`font-semibold ${
-            isDarkMode ? "text-gray-200" : "text-gray-700"
+            isDarkMode ? "text-gray-200" : "text-gray-800"
           }`}
         >
           Example Test Cases
@@ -98,21 +98,21 @@ export default function QuestionDisplay({
               className={`p-4 rounded-lg border ${
                 isDarkMode
                   ? "bg-gray-800 border-gray-700"
-                  : "bg-gray-50 border-gray-200"
+                  : "bg-white border-gray-300 shadow-sm"
               }`}
             >
               <div className="space-y-2">
                 <div className="text-sm">
                   <span
                     className={`font-medium ${
-                      isDarkMode ? "text-gray-300" : "text-gray-600"
+                      isDarkMode ? "text-gray-300" : "text-gray-700"
                     }`}
                   >
                     Input:
                   </span>
                   <code
                     className={`ml-2 font-mono ${
-                      isDarkMode ? "text-blue-400" : "text-blue-600"
+                      isDarkMode ? "text-blue-400" : "text-blue-700"
                     }`}
                   >
                     {testCase.input}
@@ -121,14 +121,14 @@ export default function QuestionDisplay({
                 <div className="text-sm">
                   <span
                     className={`font-medium ${
-                      isDarkMode ? "text-gray-300" : "text-gray-600"
+                      isDarkMode ? "text-gray-300" : "text-gray-700"
                     }`}
                   >
                     Expected:
                   </span>
                   <code
                     className={`ml-2 font-mono ${
-                      isDarkMode ? "text-green-400" : "text-green-600"
+                      isDarkMode ? "text-green-400" : "text-green-700"
                     }`}
                   >
                     {JSON.stringify(testCase.expected)}
@@ -137,7 +137,7 @@ export default function QuestionDisplay({
                 {testCase.description && (
                   <div
                     className={`text-xs ${
-                      isDarkMode ? "text-gray-400" : "text-gray-500"
+                      isDarkMode ? "text-gray-400" : "text-gray-600"
                     }`}
                   >
                     {testCase.description}
@@ -150,7 +150,7 @@ export default function QuestionDisplay({
         {challenge.testCases.length > 2 && (
           <p
             className={`text-sm ${
-              isDarkMode ? "text-gray-400" : "text-gray-500"
+              isDarkMode ? "text-gray-400" : "text-gray-600"
             }`}
           >
             + {challenge.testCases.length - 2} more test cases will be evaluated
@@ -159,7 +159,7 @@ export default function QuestionDisplay({
       </div>
 
       {/* Navigation buttons at the bottom */}
-      <div className="flex justify-between items-center pt-4 border-t border-gray-200 dark:border-gray-700">
+      <div className="flex justify-between items-center pt-4 border-t border-gray-300 dark:border-gray-700">
         {prevChallenge ? (
           <>
             <button
@@ -167,7 +167,7 @@ export default function QuestionDisplay({
               className={`flex items-center justify-center space-x-2 px-3 lg:px-4 py-2 rounded-lg transition-colors ${
                 isDarkMode
                   ? "bg-blue-900/20 hover:bg-blue-900/30 text-blue-400 border border-blue-700"
-                  : "bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200"
+                  : "bg-blue-100 hover:bg-blue-200 text-blue-800 border border-blue-300"
               }`}
               id="toggle-prev"
             >
@@ -193,7 +193,7 @@ export default function QuestionDisplay({
               className={`flex items-center justify-center space-x-2 px-3 lg:px-4 py-2 rounded-lg transition-colors ${
                 isDarkMode
                   ? "bg-blue-900/20 hover:bg-blue-900/30 text-blue-400 border border-blue-700"
-                  : "bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200"
+                  : "bg-blue-100 hover:bg-blue-200 text-blue-800 border border-blue-300"
               }`}
               id="toggle-next"
             >

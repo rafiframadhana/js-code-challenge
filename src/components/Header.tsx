@@ -47,7 +47,7 @@ export default function Header({
         className={`${
           isDarkMode
             ? "bg-gray-800 border-gray-700"
-            : "bg-white border-gray-200"
+            : "bg-white border-gray-300 shadow-sm"
         } border-b px-4 sm:px-6 py-4`}
       >
         <div className="flex items-center justify-between">
@@ -89,7 +89,7 @@ export default function Header({
                   className={`flex items-center space-x-1 sm:space-x-2 px-2 sm:px-3 py-2 rounded-lg transition-colors ${
                     isDarkMode
                       ? "bg-gray-700 hover:bg-gray-600 text-gray-300"
-                      : "bg-gray-100 hover:bg-gray-200 text-gray-600"
+                      : "bg-gray-200 hover:bg-gray-300 text-gray-700"
                   }`}
                   id="reset-progress-button"
                 >
@@ -112,7 +112,7 @@ export default function Header({
                   className={`p-2 rounded-lg transition-colors ${
                     isDarkMode
                       ? "bg-gray-700 hover:bg-gray-600 text-gray-300"
-                      : "bg-gray-100 hover:bg-gray-200 text-gray-600"
+                      : "bg-gray-200 hover:bg-gray-300 text-gray-700"
                   }`}
                   id="toggle-sound-button"
                 >
@@ -138,7 +138,7 @@ export default function Header({
               className={`p-2 rounded-lg transition-colors ${
                 isDarkMode
                   ? "bg-gray-700 hover:bg-gray-600 text-yellow-400"
-                  : "bg-gray-100 hover:bg-gray-200 text-gray-600"
+                  : "bg-gray-200 hover:bg-gray-300 text-orange-600"
               }`}
               id="toggle-theme-button"
             >
@@ -165,7 +165,7 @@ export default function Header({
                   className={`hidden lg:block p-2 rounded-lg transition-colors ${
                     isDarkMode
                       ? "bg-gray-700 hover:bg-gray-600 text-gray-300"
-                      : "bg-gray-100 hover:bg-gray-200 text-gray-600"
+                      : "bg-gray-200 hover:bg-gray-300 text-gray-700"
                   }`}
                   id="toggle-sidebar-button"
                 >
@@ -190,7 +190,7 @@ export default function Header({
                   className={`lg:hidden p-2 rounded-lg transition-colors ${
                     isDarkMode
                       ? "bg-gray-700 hover:bg-gray-600 text-gray-300"
-                      : "bg-gray-100 hover:bg-gray-200 text-gray-600"
+                      : "bg-gray-200 hover:bg-gray-300 text-gray-700"
                   }`}
                 >
                   <Menu className="w-5 h-5" />

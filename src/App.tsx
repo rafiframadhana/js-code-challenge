@@ -107,7 +107,7 @@ export default function App() {
   };
 
   return (
-    <div className={`min-h-screen flex flex-col ${isDarkMode ? 'bg-gray-900' : 'bg-gray-50'} transition-colors duration-200`}>
+    <div className={`min-h-screen flex flex-col ${isDarkMode ? 'bg-gray-900' : 'bg-gray-100'} transition-colors duration-200`}>
       <Header 
         isDarkMode={isDarkMode} 
         onThemeToggle={toggleTheme} 
