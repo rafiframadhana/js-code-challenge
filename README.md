@@ -17,7 +17,7 @@
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: React 18, TypeScript
+- **Frontend**: React, TypeScript
 - **Styling**: Tailwind CSS
 - **Icons**: Lucide React
 - **Build Tool**: Vite
@@ -122,7 +122,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Rafif Ramadhana**
 - GitHub: [@rafiframadhana](https://github.com/rafiframadhana)
-- Portfolio: [rafiframadhana.com](https://rafiframadhana.site)
+- Portfolio: [rafiframadhana.site](https://rafiframadhana.site)
  
 ---
 
