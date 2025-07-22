@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Lightbulb, CheckCircle, ArrowRight, ArrowLeft } from "lucide-react";
+import { Tooltip } from "react-tooltip";
 import type { Challenge } from "../data/challenges";
 import HintModal from "./HintModal";
 import DifficultyTag from "./DifficultyTag";
@@ -8,7 +9,6 @@ import {
   findNextChallenge,
   findPrevChallenge,
 } from "../utils/challengeUtils";
-import { Tooltip } from "react-tooltip";
 
 interface QuestionDisplayProps {
   challenge: Challenge;
@@ -71,6 +71,8 @@ export default function QuestionDisplay({
         </div>
         <button
           onClick={() => setShowHint(true)}
+          data-tooltip-id="hint-tooltip"
+          data-tooltip-content="Get a helpful hint for this challenge"
           className={`flex items-center justify-center space-x-1 px-3 lg:px-4 py-2 rounded-lg transition-colors self-start sm:self-auto ${
             isDarkMode
               ? "bg-yellow-900/20 hover:bg-yellow-900/30 text-yellow-400 border border-yellow-700"
@@ -164,23 +166,17 @@ export default function QuestionDisplay({
           <>
             <button
               onClick={handlePrevChallenge}
+              data-tooltip-id="prev-challenge-tooltip"
+              data-tooltip-content={`Previous: ${prevChallenge.title}`}
               className={`flex items-center justify-center space-x-2 px-3 lg:px-4 py-2 rounded-lg transition-colors ${
                 isDarkMode
                   ? "bg-blue-900/20 hover:bg-blue-900/30 text-blue-400 border border-blue-700"
                   : "bg-blue-100 hover:bg-blue-200 text-blue-800 border border-blue-300"
               }`}
-              id="toggle-prev"
             >
               <ArrowLeft className="w-4 h-4" />
               <span className="text-sm font-medium">Previous</span>
             </button>
-            <Tooltip
-              anchorSelect="#toggle-prev"
-              content={`Previous: ${prevChallenge.title}`}
-              place="bottom-start"
-              variant={isDarkMode ? "light" : "dark"}
-              style={{ zIndex: 1000 }}
-            />
           </>
         ) : (
           <div></div>
@@ -190,23 +186,17 @@ export default function QuestionDisplay({
           <>
             <button
               onClick={handleNextChallenge}
+              data-tooltip-id="next-challenge-tooltip"
+              data-tooltip-content={`Next: ${nextChallenge.title}`}
               className={`flex items-center justify-center space-x-2 px-3 lg:px-4 py-2 rounded-lg transition-colors ${
                 isDarkMode
                   ? "bg-blue-900/20 hover:bg-blue-900/30 text-blue-400 border border-blue-700"
                   : "bg-blue-100 hover:bg-blue-200 text-blue-800 border border-blue-300"
               }`}
-              id="toggle-next"
             >
               <span className="text-sm font-medium">Next</span>
               <ArrowRight className="w-4 h-4" />
             </button>
-            <Tooltip
-              anchorSelect="#toggle-next"
-              content={`Next: ${nextChallenge.title}`}
-              place="bottom-end"
-              variant={isDarkMode ? "light" : "dark"}
-              style={{ zIndex: 1000 }}
-            />
           </>
         ) : (
           <div></div>
@@ -218,6 +208,47 @@ export default function QuestionDisplay({
         onClose={() => setShowHint(false)}
         hint={challenge.hint}
         isDarkMode={isDarkMode}
+      />
+
+      {/* Tooltips */}
+      <Tooltip
+        id="hint-tooltip"
+        place="bottom"
+        style={{
+          backgroundColor: isDarkMode ? "#374151" : "#111827",
+          color: isDarkMode ? "#f3f4f6" : "#ffffff",
+          fontSize: "12px",
+          borderRadius: "6px",
+          padding: "4px 8px",
+          zIndex: 10000,
+          marginTop: 5,
+        }}
+      />
+      <Tooltip
+        id="prev-challenge-tooltip"
+        place="bottom-start"
+        style={{
+          backgroundColor: isDarkMode ? "#374151" : "#111827",
+          color: isDarkMode ? "#f3f4f6" : "#ffffff",
+          fontSize: "14px",
+          borderRadius: "6px",
+          padding: "8px 16px",
+          zIndex: 10000,
+          marginTop: 5,
+        }}
+      />
+      <Tooltip
+        id="next-challenge-tooltip"
+        place="bottom-end"
+        style={{
+          backgroundColor: isDarkMode ? "#374151" : "#111827",
+          color: isDarkMode ? "#f3f4f6" : "#ffffff",
+          fontSize: "14px",
+          borderRadius: "6px",
+          padding: "8px 16px",
+          zIndex: 10000,
+          marginTop: 5,
+        }}
       />
     </div>
   );

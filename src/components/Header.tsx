@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Moon, Sun, RotateCcw, Menu, Volume2, VolumeX } from "lucide-react";
+import { Tooltip } from "react-tooltip";
 import { useProgress } from "../hooks/useProgress";
 import ConfirmModal from "./ConfirmModal";
-import { Tooltip } from "react-tooltip";
 
 interface HeaderProps {
   isDarkMode: boolean;
@@ -86,35 +86,30 @@ export default function Header({
               <>
                 <button
                   onClick={handleResetProgress}
+                  data-tooltip-id="reset-progress-tooltip"
+                  data-tooltip-content="Reset all progress and start over"
                   className={`flex items-center space-x-1 sm:space-x-2 px-2 sm:px-3 py-2 rounded-lg transition-colors ${
                     isDarkMode
                       ? "bg-gray-700 hover:bg-gray-600 text-gray-300"
                       : "bg-gray-200 hover:bg-gray-300 text-gray-700"
                   }`}
-                  id="reset-progress-button"
                 >
                   <RotateCcw className="md:w-4 md:h-4 w-5 h-5" />
                   <span className="text-xs sm:text-sm hidden sm:inline">
                     Reset Progress
                   </span>
                 </button>
-                <Tooltip
-                  anchorSelect="#reset-progress-button"
-                  content="Reset all progress"
-                  place="bottom"
-                  noArrow={true}
-                  variant={isDarkMode ? "light" : "dark"}
-                  style={{ zIndex: 1000 }}
-                />
+
 
                 <button
                   onClick={onSoundToggle}
+                  data-tooltip-id="sound-tooltip"
+                  data-tooltip-content={isSoundOn ? "Turn off sounds" : "Turn on sounds"}
                   className={`p-2 rounded-lg transition-colors ${
                     isDarkMode
                       ? "bg-gray-700 hover:bg-gray-600 text-gray-300"
                       : "bg-gray-200 hover:bg-gray-300 text-gray-700"
                   }`}
-                  id="toggle-sound-button"
                 >
                   {isSoundOn ? (
                     <Volume2 className="w-5 h-5" />
@@ -122,25 +117,20 @@ export default function Header({
                     <VolumeX className="w-5 h-5" />
                   )}
                 </button>
-                <Tooltip
-                  anchorSelect="#toggle-sound-button"
-                  content={`Turn sound ${isSoundOn ? "off" : "on"}`}
-                  place="bottom"
-                  noArrow={true}
-                  variant={isDarkMode ? "light" : "dark"}
-                  style={{ zIndex: 1000 }}
-                />
+    
               </>
             )}
 
             <button
               onClick={onThemeToggle}
+              data-tooltip-id="theme-tooltip"
+              data-tooltip-content={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
               className={`p-2 rounded-lg transition-colors ${
                 isDarkMode
                   ? "bg-gray-700 hover:bg-gray-600 text-yellow-400"
                   : "bg-gray-200 hover:bg-gray-300 text-orange-600"
               }`}
-              id="toggle-theme-button"
+  
             >
               {isDarkMode ? (
                 <Sun className="w-5 h-5" />
@@ -148,37 +138,25 @@ export default function Header({
                 <Moon className="w-5 h-5" />
               )}
             </button>
-            <Tooltip
-              anchorSelect="#toggle-theme-button"
-              content={`Switch to ${isDarkMode ? "light" : "dark"} mode`}
-              place="bottom-start"
-              noArrow={true}
-              variant={isDarkMode ? "light" : "dark"}
-              style={{ zIndex: 1000 }}
-            />
+  
 
             {/* Desktop Sidebar Toggle */}
             {showDesktopSidebarToggle && (
               <>
                 <button
                   onClick={onDesktopSidebarToggle}
+                  data-tooltip-id="desktop-menu-tooltip"
+                  data-tooltip-content="Coding Challenges"
                   className={`hidden lg:block p-2 rounded-lg transition-colors ${
                     isDarkMode
                       ? "bg-gray-700 hover:bg-gray-600 text-gray-300"
                       : "bg-gray-200 hover:bg-gray-300 text-gray-700"
                   }`}
-                  id="toggle-sidebar-button"
+    
                 >
                   <Menu className="w-5 h-5" />
                 </button>
-                <Tooltip
-                  anchorSelect="#toggle-sidebar-button"
-                  content="Toggle sidebar"
-                  place="bottom-start"
-                  noArrow={true}
-                  variant={isDarkMode ? "light" : "dark"}
-                  style={{ zIndex: 1000 }}
-                />
+ 
               </>
             )}
 
@@ -211,6 +189,49 @@ export default function Header({
         cancelText="Cancel"
         isDarkMode={isDarkMode}
         variant="danger"
+      />
+
+      {/* Tooltips */}
+      <Tooltip
+        id="reset-progress-tooltip"
+        style={{
+          backgroundColor: isDarkMode ? "#374151" : "#111827",
+          color: isDarkMode ? "#f3f4f6" : "#ffffff",
+          fontSize: "12px",
+          borderRadius: "6px",
+          padding: "4px 8px",
+        }}
+      />
+      <Tooltip
+        id="sound-tooltip"
+        style={{
+          backgroundColor: isDarkMode ? "#374151" : "#111827",
+          color: isDarkMode ? "#f3f4f6" : "#ffffff",
+          fontSize: "12px",
+          borderRadius: "6px",
+          padding: "4px 8px",
+        }}
+      />
+      <Tooltip
+        id="theme-tooltip"
+        style={{
+          backgroundColor: isDarkMode ? "#374151" : "#111827",
+          color: isDarkMode ? "#f3f4f6" : "#ffffff",
+          fontSize: "12px",
+          borderRadius: "6px",
+          padding: "4px 8px",
+        }}
+      />
+      <Tooltip
+        id="desktop-menu-tooltip"
+        place="bottom-end"
+        style={{
+          backgroundColor: isDarkMode ? "#374151" : "#111827",
+          color: isDarkMode ? "#f3f4f6" : "#ffffff",
+          fontSize: "12px",
+          borderRadius: "6px",
+          padding: "4px 8px",
+        }}
       />
     </>
   );

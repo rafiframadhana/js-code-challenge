@@ -3,7 +3,8 @@ import Editor from "@monaco-editor/react";
 import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { oneDark } from "@codemirror/theme-one-dark";
-import { Play, RotateCcw } from "lucide-react";
+import { Play, RotateCcw, Terminal } from "lucide-react";
+import { Tooltip } from "react-tooltip";
 import type { Challenge } from "../data/challenges";
 import ChallengeSuccessModal from "./ChallengeSuccessModal";
 import { useDeviceType } from "../hooks/useDeviceType";
@@ -38,8 +39,11 @@ export default function CodeEditor({
   const [code, setCode] = useState(challenge.starterCode || "");
   const [results, setResults] = useState<TestResult[]>([]);
   const [isRunning, setIsRunning] = useState(false);
+  const [isEvaluating, setIsEvaluating] = useState(false);
   const [consoleOutput, setConsoleOutput] = useState<string[]>([]);
+  const [terminalOutput, setTerminalOutput] = useState<string[]>([]);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const editorRef = useRef<any>(null);
   const isMobile = useDeviceType();
 
@@ -47,8 +51,81 @@ export default function CodeEditor({
     setCode(challenge.starterCode || "");
     setResults([]);
     setConsoleOutput([]);
+    setTerminalOutput([]); // This will show the placeholder text again
   };
 
+  const runCode = async () => {
+    setIsRunning(true);
+    setTerminalOutput([]);
+
+    const logs: string[] = [];
+
+    // Mock console.log to capture output with proper formatting
+    const originalLog = console.log;
+    console.log = (...args: unknown[]) => {
+      const formattedArgs = args.map((arg) => {
+        if (Array.isArray(arg)) {
+          return `[${arg
+            .map((item) => {
+              if (typeof item === "string") {
+                return `'${item}'`;
+              } else if (typeof item === "object" && item !== null) {
+                return JSON.stringify(item);
+              } else {
+                return String(item);
+              }
+            })
+            .join(", ")}]`;
+        } else if (typeof arg === "object" && arg !== null) {
+          try {
+            return JSON.stringify(arg, null, 2);
+          } catch {
+            return String(arg);
+          }
+        } else if (typeof arg === "string") {
+          return arg;
+        } else if (typeof arg === "undefined") {
+          return "undefined";
+        } else if (typeof arg === "function") {
+          return `[Function: ${arg.name || "anonymous"}]`;
+        } else {
+          return String(arg);
+        }
+      });
+      logs.push(formattedArgs.join(" "));
+      originalLog(...args);
+    };
+
+    try {
+      // Create a safe evaluation environment for testing
+      const testFunction = new Function(`
+        try {
+          ${code}
+          // Try to execute any standalone code or function calls
+        } catch (error) {
+          console.log("Error:", error.message);
+        }
+      `);
+
+      testFunction();
+
+      if (logs.length === 0) {
+        logs.push(
+          "Code executed successfully. No output detected. Use console.log() to display output here."
+        );
+      }
+    } catch (error) {
+      logs.push(
+        `Error: ${error instanceof Error ? error.message : "Unknown error"}`
+      );
+    } finally {
+      console.log = originalLog;
+      setTerminalOutput(logs);
+      setIsRunning(false);
+    }
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleEditorDidMount = (editor: any, monaco: any) => {
     editorRef.current = editor;
 
@@ -66,7 +143,7 @@ export default function CodeEditor({
 
     // Configure editor options
     editor.updateOptions({
-      fontSize: 16,
+      fontSize: 14,
       lineHeight: 20,
       fontFamily:
         "'Fira Code', 'JetBrains Mono', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace",
@@ -102,7 +179,7 @@ export default function CodeEditor({
     });
   };
   const evaluateCode = async () => {
-    setIsRunning(true);
+    setIsEvaluating(true);
     setConsoleOutput([]);
 
     const testResults: TestResult[] = [];
@@ -229,9 +306,9 @@ export default function CodeEditor({
               const keysA = Object.keys(a as Record<string, unknown>);
               const keysB = Object.keys(b as Record<string, unknown>);
               if (keysA.length !== keysB.length) return false;
-              return keysA.every((key) => 
+              return keysA.every((key) =>
                 deepEqual(
-                  (a as Record<string, unknown>)[key], 
+                  (a as Record<string, unknown>)[key],
                   (b as Record<string, unknown>)[key]
                 )
               );
@@ -277,7 +354,7 @@ export default function CodeEditor({
       console.log = originalLog;
       setConsoleOutput(logs);
       setResults(testResults);
-      setIsRunning(false);
+      setIsEvaluating(false);
       onCodeEvaluate(code, testResults);
 
       // Sound Effect
@@ -368,22 +445,40 @@ export default function CodeEditor({
           <div className="flex space-x-2">
             <button
               onClick={resetCode}
+              data-tooltip-id="reset-code-tooltip"
+              data-tooltip-content="Reset code to starter template"
               className={`flex items-center space-x-1 px-3 lg:px-3 py-1.5 rounded-md text-sm transition-colors ${
                 isDarkMode
                   ? "bg-gray-700 hover:bg-gray-600 text-gray-300"
-                  : "bg-gray-100 hover:bg-gray-200 text-gray-600"
+                  : "bg-gray-200 hover:bg-gray-300 text-gray-700"
               }`}
             >
               <RotateCcw className="w-4 h-4" />
               <span className="hidden sm:inline">Reset</span>
             </button>
             <button
-              onClick={evaluateCode}
+              onClick={runCode}
               disabled={isRunning}
+              data-tooltip-id="run-code-tooltip"
+              data-tooltip-content="Test your code and see output in terminal"
+              className={`flex items-center space-x-1 px-3 lg:px-4 py-1.5 rounded-md text-sm transition-colors disabled:opacity-50 ${
+                isDarkMode
+                  ? "bg-green-700 hover:bg-green-600 text-white"
+                  : "bg-green-600 hover:bg-green-700 text-white"
+              }`}
+            >
+              <Terminal className="w-4 h-4" />
+              <span>{isRunning ? "Running..." : "Run"}</span>
+            </button>
+            <button
+              onClick={evaluateCode}
+              disabled={isEvaluating}
+              data-tooltip-id="evaluate-code-tooltip"
+              data-tooltip-content="Run all test cases and check your solution"
               className="flex items-center space-x-1 px-3 lg:px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm transition-colors disabled:opacity-50"
             >
               <Play className="w-4 h-4" />
-              <span>{isRunning ? "Running..." : "Evaluate"}</span>
+              <span>{isEvaluating ? "Evaluating..." : "Evaluate"}</span>
             </button>
           </div>
         </div>
@@ -421,7 +516,7 @@ export default function CodeEditor({
               onMount={handleEditorDidMount}
               theme={isDarkMode ? "vs-dark" : "light"}
               options={{
-                fontSize: 16,
+                fontSize: 14,
                 lineHeight: 20,
                 fontFamily:
                   "'Fira Code', 'JetBrains Mono', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace",
@@ -492,6 +587,41 @@ export default function CodeEditor({
               </kbd>
               <span> to format your code</span>
             </>
+          )}
+        </div>
+      </div>
+
+      {/* Terminal Output - Always visible */}
+      <div className="space-y-2">
+        <h3
+          className={`font-medium flex items-center space-x-2 ${
+            isDarkMode ? "text-gray-200" : "text-gray-700"
+          }`}
+        >
+          <Terminal className="w-4 h-4" />
+          <span>Terminal</span>
+        </h3>
+        <div
+          className={`p-3 rounded-lg font-mono text-sm border-l-4 ${
+            isDarkMode
+              ? "bg-gray-800 border-green-500"
+              : "bg-gray-900 border-green-500"
+          }`}
+        >
+          {terminalOutput.length > 0 ? (
+            terminalOutput.map((log, index) => (
+              <div key={index} className="flex text-green-400">
+                <span className="text-green-500 mr-2">$</span>
+                <span className="whitespace-pre-wrap">{log}</span>
+              </div>
+            ))
+          ) : (
+            <div className="flex text-green-400 opacity-60">
+              <span className="text-green-500 mr-2">$</span>
+              <span>
+                Use console.log() to test your code before evaluating.
+              </span>
+            </div>
           )}
         </div>
       </div>
@@ -580,16 +710,16 @@ export default function CodeEditor({
         <div className="space-y-2">
           <h3
             className={`font-medium ${
-              isDarkMode ? "text-gray-200" : "text-gray-700"
+              isDarkMode ? "text-gray-200" : "text-gray-800"
             }`}
           >
-            Console Output
+            Console Output (Test Results)
           </h3>
           <div
             className={`p-3 rounded-lg font-mono text-sm ${
               isDarkMode
                 ? "bg-gray-800 text-gray-300"
-                : "bg-gray-50 text-gray-700"
+                : "bg-white text-gray-700 border border-gray-300"
             }`}
           >
             {consoleOutput.map((log, index) => (
@@ -606,6 +736,44 @@ export default function CodeEditor({
         onContinue={handleContinueToNext}
         isDarkMode={isDarkMode}
         hasNextChallenge={hasNextChallenge}
+      />
+
+      {/* Tooltips */}
+      <Tooltip
+        id="reset-code-tooltip"
+        place="bottom"
+        style={{
+          backgroundColor: isDarkMode ? "#374151" : "#111827",
+          color: isDarkMode ? "#f3f4f6" : "#ffffff",
+          fontSize: "12px",
+          borderRadius: "6px",
+          padding: "4px 8px",
+          marginTop: 0
+        }}
+      />
+      <Tooltip
+        id="run-code-tooltip"
+        place="bottom"
+        style={{
+          backgroundColor: isDarkMode ? "#374151" : "#111827",
+          color: isDarkMode ? "#f3f4f6" : "#ffffff",
+          fontSize: "12px",
+          borderRadius: "6px",
+          padding: "4px 8px",
+          marginTop: 0
+        }}
+      />
+      <Tooltip
+        id="evaluate-code-tooltip"
+         place="bottom-start"
+        style={{
+          backgroundColor: isDarkMode ? "#374151" : "#111827",
+          color: isDarkMode ? "#f3f4f6" : "#ffffff",
+          fontSize: "12px",
+          borderRadius: "6px",
+          padding: "4px 8px",
+          marginTop: 0
+        }}
       />
     </div>
   );
