@@ -184,6 +184,45 @@ export const challengeData: ChallengeData = {
             { input: "[1, 2, 3], [4]", expected: [1, 4, 2, 3], description: "Second array shorter" },
             { input: "[], [1, 2]", expected: [1, 2], description: "First array empty" }
           ]
+        },
+        {
+          id: "arr-13",
+          title: "Array Reverse",
+          description: "Write a function that reverses an array without using the built-in reverse() method.",
+          hint: "Create a new array and iterate from the end of the original array to the beginning.",
+          starterCode: "function reverseArray(arr) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "[1, 2, 3, 4, 5]", expected: [5, 4, 3, 2, 1], description: "Reverse number array" },
+            { input: "['a', 'b', 'c']", expected: ['c', 'b', 'a'], description: "Reverse string array" },
+            { input: "[42]", expected: [42], description: "Single element" },
+            { input: "[]", expected: [], description: "Empty array" }
+          ]
+        },
+        {
+          id: "arr-14",
+          title: "Array Chunk",
+          description: "Write a function that splits an array into smaller arrays of a specified size.",
+          hint: "Use a loop to slice the array in chunks of the given size.",
+          starterCode: "function chunkArray(arr, size) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "[1, 2, 3, 4, 5, 6], 2", expected: [[1, 2], [3, 4], [5, 6]], description: "Chunk by 2" },
+            { input: "[1, 2, 3, 4, 5], 3", expected: [[1, 2, 3], [4, 5]], description: "Uneven chunks" },
+            { input: "[1, 2], 5", expected: [[1, 2]], description: "Size larger than array" },
+            { input: "[], 2", expected: [], description: "Empty array" }
+          ]
+        },
+        {
+          id: "arr-15",
+          title: "Find Missing Number",
+          description: "Write a function that finds the missing number in an array of consecutive integers from 1 to n+1.",
+          hint: "Calculate the expected sum of 1 to n+1 and subtract the actual sum of the array.",
+          starterCode: "function findMissing(arr) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "[1, 2, 4, 5]", expected: 3, description: "Missing 3 from 1-5" },
+            { input: "[2, 3, 4, 5, 6]", expected: 1, description: "Missing 1 from 1-6" },
+            { input: "[1, 2, 3, 5, 6, 7]", expected: 4, description: "Missing 4 from 1-7" },
+            { input: "[1, 3]", expected: 2, description: "Missing 2 from 1-3" }
+          ]
         }
       ],
       "Loops": [
@@ -329,6 +368,45 @@ export const challengeData: ChallengeData = {
             { input: "3", expected: [1, 2, "Fizz"], description: "FizzBuzz up to 3" },
             { input: "1", expected: [1], description: "FizzBuzz up to 1" }
           ]
+        },
+        {
+          id: "loop-12",
+          title: "Power of Two",
+          description: "Write a function that generates an array of powers of 2 up to a given number n.",
+          hint: "Start with 1 and keep multiplying by 2 until you exceed n.",
+          starterCode: "function powersOfTwo(n) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "10", expected: [1, 2, 4, 8], description: "Powers of 2 up to 10" },
+            { input: "20", expected: [1, 2, 4, 8, 16], description: "Powers of 2 up to 20" },
+            { input: "1", expected: [1], description: "Just 1" },
+            { input: "0", expected: [], description: "No powers of 2 up to 0" }
+          ]
+        },
+        {
+          id: "loop-13",
+          title: "Triangle Numbers",
+          description: "Write a function that generates the first n triangle numbers (1, 3, 6, 10, 15...).",
+          hint: "Triangle numbers follow the pattern: nth triangle number = 1+2+3+...+n.",
+          starterCode: "function triangleNumbers(n) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "5", expected: [1, 3, 6, 10, 15], description: "First 5 triangle numbers" },
+            { input: "3", expected: [1, 3, 6], description: "First 3 triangle numbers" },
+            { input: "1", expected: [1], description: "First triangle number" },
+            { input: "0", expected: [], description: "No triangle numbers" }
+          ]
+        },
+        {
+          id: "loop-14",
+          title: "Digital Root",
+          description: "Write a function that calculates the digital root of a number (keep summing digits until you get a single digit).",
+          hint: "Use nested loops: outer loop continues until single digit, inner loop sums the digits.",
+          starterCode: "function digitalRoot(n) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "123", expected: 6, description: "1+2+3=6" },
+            { input: "456", expected: 6, description: "4+5+6=15, 1+5=6" },
+            { input: "999", expected: 9, description: "9+9+9=27, 2+7=9" },
+            { input: "5", expected: 5, description: "Already single digit" }
+          ]
         }
       ],
       "Strings": [
@@ -448,6 +526,45 @@ export const challengeData: ChallengeData = {
             { input: "'hello', 'hi'", expected: false, description: "Substring not found" },
             { input: "'test', 'test'", expected: true, description: "Exact match" }
           ]
+        },
+        {
+          id: "str-10",
+          title: "Count Character",
+          description: "Write a function that counts how many times a specific character appears in a string.",
+          hint: "Loop through the string and increment a counter each time you find the target character.",
+          starterCode: "function countChar(str, char) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "'hello', 'l'", expected: 2, description: "Two 'l' characters" },
+            { input: "'banana', 'a'", expected: 3, description: "Three 'a' characters" },
+            { input: "'test', 'z'", expected: 0, description: "Character not found" },
+            { input: "'aaa', 'a'", expected: 3, description: "All same character" }
+          ]
+        },
+        {
+          id: "str-11",
+          title: "Repeat String",
+          description: "Write a function that repeats a string a specified number of times.",
+          hint: "Use a loop to concatenate the string to itself n times.",
+          starterCode: "function repeatString(str, times) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "'hello', 3", expected: "hellohellohello", description: "Repeat 3 times" },
+            { input: "'a', 5", expected: "aaaaa", description: "Repeat single character" },
+            { input: "'test', 1", expected: "test", description: "Repeat once" },
+            { input: "'hello', 0", expected: "", description: "Repeat zero times" }
+          ]
+        },
+        {
+          id: "str-12",
+          title: "String to Array",
+          description: "Write a function that converts a string into an array of characters.",
+          hint: "Loop through the string and push each character into an array, or use split('').",
+          starterCode: "function stringToArray(str) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "'hello'", expected: ['h', 'e', 'l', 'l', 'o'], description: "String to character array" },
+            { input: "'abc'", expected: ['a', 'b', 'c'], description: "Three characters" },
+            { input: "'a'", expected: ['a'], description: "Single character" },
+            { input: "''", expected: [], description: "Empty string" }
+          ]
         }
       ],
     "Basic Math": [
@@ -501,6 +618,45 @@ export const challengeData: ChallengeData = {
             { input: "2", expected: Math.PI * 4, description: "Area of circle with radius 2" },
             { input: "0", expected: 0, description: "Area of circle with radius 0" },
             { input: "5", expected: Math.PI * 25, description: "Area of circle with radius 5" }
+          ]
+        },
+        {
+          id: "math-5",
+          title: "Greatest Common Divisor",
+          description: "Write a function that finds the greatest common divisor (GCD) of two numbers.",
+          hint: "Use the Euclidean algorithm: keep finding remainder until one number becomes 0.",
+          starterCode: "function gcd(a, b) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "12, 8", expected: 4, description: "GCD of 12 and 8" },
+            { input: "15, 25", expected: 5, description: "GCD of 15 and 25" },
+            { input: "7, 13", expected: 1, description: "GCD of coprime numbers" },
+            { input: "0, 5", expected: 5, description: "GCD with zero" }
+          ]
+        },
+        {
+          id: "math-6",
+          title: "Perfect Square",
+          description: "Write a function that checks if a number is a perfect square.",
+          hint: "Find the square root and check if it's a whole number.",
+          starterCode: "function isPerfectSquare(n) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "16", expected: true, description: "16 is 4²" },
+            { input: "25", expected: true, description: "25 is 5²" },
+            { input: "15", expected: false, description: "15 is not a perfect square" },
+            { input: "1", expected: true, description: "1 is 1²" }
+          ]
+        },
+        {
+          id: "math-7",
+          title: "Number Range Sum",
+          description: "Write a function that calculates the sum of all numbers in a range from start to end (inclusive).",
+          hint: "Use the formula (end - start + 1) * (start + end) / 2 or a loop.",
+          starterCode: "function rangeSum(start, end) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "1, 5", expected: 15, description: "1+2+3+4+5 = 15" },
+            { input: "3, 7", expected: 25, description: "3+4+5+6+7 = 25" },
+            { input: "5, 5", expected: 5, description: "Single number" },
+            { input: "0, 3", expected: 6, description: "0+1+2+3 = 6" }
           ]
         }
       ]
@@ -633,77 +789,31 @@ export const challengeData: ChallengeData = {
             { input: "{name: 'John'}, {name: 'string', age: 'number'}", expected: false, description: "Missing property" },
             { input: "{name: 'John', age: '25'}, {name: 'string', age: 'number'}", expected: false, description: "Wrong type" }
           ]
-        }
-      ],
-      "Functions": [
+        },
         {
-          id: "func-1",
-          title: "Function Composition",
-          description: "Write a function that takes two functions and returns a new function that applies them in sequence (compose).",
-          hint: "Return a function that calls the first function with the input, then calls the second function with that result.",
-          starterCode: "function compose(f1, f2) {\n  // Your code here\n  \n}",
+          id: "obj-11",
+          title: "Object Key Transformation",
+          description: "Write a function that transforms all keys in an object to uppercase.",
+          hint: "Create a new object and copy each property with its key converted to uppercase.",
+          starterCode: "function transformKeys(obj) {\n  // Your code here\n  \n}",
           testCases: [
-            { input: "(x => x * 2), (x => x + 1)", expected: "function", description: "Should return a function" },
+            { input: "{name: 'John', age: 25}", expected: {NAME: 'John', AGE: 25}, description: "Transform to uppercase" },
+            { input: "{a: 1, b: 2, c: 3}", expected: {A: 1, B: 2, C: 3}, description: "Single letter keys" },
+            { input: "{}", expected: {}, description: "Empty object" },
+            { input: "{firstName: 'Jane'}", expected: {FIRSTNAME: 'Jane'}, description: "Camel case key" }
           ]
         },
         {
-          id: "func-2",
-          title: "Curry Function",
-          description: "Write a function that takes a function and returns a curried version of it.",
-          hint: "Return a function that collects arguments until it has enough, then calls the original function.",
-          starterCode: "function curry(fn) {\n  // Your code here\n  \n}",
+          id: "obj-12",
+          title: "Find Object Property Path",
+          description: "Write a function that finds the path to a specific value in a nested object.",
+          hint: "Use recursion to search through nested objects and build the path as an array.",
+          starterCode: "function findPath(obj, target) {\n  // Your code here\n  // Return array of keys leading to target value\n}",
           testCases: [
-            { input: "(a, b, c) => a + b + c", expected: "function", description: "Should return a function" },
-          ]
-        },
-        {
-          id: "func-3",
-          title: "Memoization",
-          description: "Write a function that memoizes (caches) the results of expensive function calls.",
-          hint: "Use an object or Map to store previously computed results based on the input.",
-          starterCode: "function memoize(fn) {\n  // Your code here\n  \n}",
-          testCases: [
-            { input: "x => x * x", expected: "function", description: "Should return a function" },
-          ]
-        },
-        {
-          id: "func-4",
-          title: "Partial Application",
-          description: "Write a function that partially applies arguments to another function.",
-          hint: "Return a function that combines the pre-applied arguments with new arguments.",
-          starterCode: "function partial(fn, ...args1) {\n  // Your code here\n  \n}",
-          testCases: [
-            { input: "(a, b, c) => a + b + c, 1, 2", expected: "function", description: "Should return a function" },
-          ]
-        },
-        {
-          id: "func-5",
-          title: "Debounce Function",
-          description: "Write a function that creates a debounced version of another function (delays execution until after a specified time).",
-          hint: "Use setTimeout and clearTimeout to delay function execution and cancel previous timeouts.",
-          starterCode: "function debounce(func, delay) {\n  // Your code here\n  \n}",
-          testCases: [
-            { input: "() => console.log('called'), 100", expected: "function", description: "Should return a function" }
-          ]
-        },
-        {
-          id: "func-6",
-          title: "Throttle Function",
-          description: "Write a function that creates a throttled version of another function (limits execution to once per time period).",
-          hint: "Track the last execution time and only execute if enough time has passed.",
-          starterCode: "function throttle(func, limit) {\n  // Your code here\n  \n}",
-          testCases: [
-            { input: "() => console.log('called'), 100", expected: "function", description: "Should return a function" }
-          ]
-        },
-        {
-          id: "func-7",
-          title: "Function Pipeline",
-          description: "Write a function that creates a pipeline of functions, where output of one becomes input of next.",
-          hint: "Use reduce to apply each function in sequence to the input value.",
-          starterCode: "function pipeline(...functions) {\n  // Your code here\n  \n}",
-          testCases: [
-            { input: "(x => x + 1), (x => x * 2), (x => x - 3)", expected: "function", description: "Should return a function" }
+            { input: "{a: {b: {c: 42}}}, 42", expected: ['a', 'b', 'c'], description: "Deep nested value" },
+            { input: "{x: 10, y: 20}, 20", expected: ['y'], description: "Top level value" },
+            { input: "{a: {b: 1}, c: 2}, 1", expected: ['a', 'b'], description: "Nested value" },
+            { input: "{x: 5}, 99", expected: null, description: "Value not found" }
           ]
         }
       ],
@@ -823,6 +933,32 @@ export const challengeData: ChallengeData = {
             { input: "3, 3", expected: 6, description: "3x3 grid has 6 paths" },
             { input: "1, 1", expected: 1, description: "1x1 grid has 1 path" }
           ]
+        },
+        {
+          id: "rec-10",
+          title: "String Reversal Recursive",
+          description: "Write a recursive function that reverses a string without using built-in reverse methods.",
+          hint: "Base case: empty or single character string. Recursive case: last character + reverse of remaining string.",
+          starterCode: "function reverseString(str) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "'hello'", expected: "olleh", description: "Reverse 'hello'" },
+            { input: "'abc'", expected: "cba", description: "Reverse 'abc'" },
+            { input: "'a'", expected: "a", description: "Single character" },
+            { input: "''", expected: "", description: "Empty string" }
+          ]
+        },
+        {
+          id: "rec-11",
+          title: "Tower of Hanoi",
+          description: "Write a recursive function that solves the Tower of Hanoi puzzle and returns the minimum number of moves.",
+          hint: "To move n disks: move n-1 disks to auxiliary pole, move largest disk to destination, move n-1 disks from auxiliary to destination.",
+          starterCode: "function hanoi(n) {\n  // Your code here\n  // Return number of moves\n}",
+          testCases: [
+            { input: "1", expected: 1, description: "1 disk requires 1 move" },
+            { input: "2", expected: 3, description: "2 disks require 3 moves" },
+            { input: "3", expected: 7, description: "3 disks require 7 moves" },
+            { input: "4", expected: 15, description: "4 disks require 15 moves" }
+          ]
         }
       ],
       "Array Methods": [
@@ -915,6 +1051,19 @@ export const challengeData: ChallengeData = {
             { input: "[1, 2, 3, 4, 5], 3", expected: [[1, 2, 3], [4, 5]], description: "Uneven chunks" },
             { input: "[1, 2, 3], 5", expected: [[1, 2, 3]], description: "Size larger than array" },
             { input: "[], 2", expected: [], description: "Empty array" }
+          ]
+        },
+        {
+          id: "arr-methods-8",
+          title: "Custom Flatten Function",
+          description: "Write a function that flattens a nested array into a single-level array.",
+          hint: "Check if each element is an array, if so recursively flatten it, otherwise add to result.",
+          starterCode: "function flattenArray(arr) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "[1, [2, 3], [4, [5, 6]]]", expected: [1, 2, 3, 4, 5, 6], description: "Flatten nested array" },
+            { input: "[1, 2, 3]", expected: [1, 2, 3], description: "Already flat array" },
+            { input: "[[1], [2], [3]]", expected: [1, 2, 3], description: "Array of single-element arrays" },
+            { input: "[]", expected: [], description: "Empty array" }
           ]
         }
       ],
@@ -1052,57 +1201,18 @@ export const challengeData: ChallengeData = {
             { input: "[1]", expected: [1], description: "Single element" },
             { input: "[]", expected: [], description: "Empty array" }
           ]
-        }
-      ],
-      "Data Structures": [
-        {
-          id: "ds-1",
-          title: "Stack Implementation",
-          description: "Implement a Stack data structure with push, pop, peek, and isEmpty methods.",
-          hint: "Use an array to store elements. Push adds to the end, pop removes from the end.",
-          starterCode: "class Stack {\n  constructor() {\n    // Your code here\n  }\n  \n  push(element) {\n    // Your code here\n  }\n  \n  pop() {\n    // Your code here\n  }\n  \n  peek() {\n    // Your code here\n  }\n  \n  isEmpty() {\n    // Your code here\n  }\n}",
-          testCases: [
-            { input: "new Stack()", expected: "object", description: "Create stack instance" },
-          ]
         },
         {
-          id: "ds-2",
-          title: "Queue Implementation",
-          description: "Implement a Queue data structure with enqueue, dequeue, front, and isEmpty methods.",
-          hint: "Use an array to store elements. Enqueue adds to the end, dequeue removes from the beginning.",
-          starterCode: "class Queue {\n  constructor() {\n    // Your code here\n  }\n  \n  enqueue(element) {\n    // Your code here\n  }\n  \n  dequeue() {\n    // Your code here\n  }\n  \n  front() {\n    // Your code here\n  }\n  \n  isEmpty() {\n    // Your code here\n  }\n}",
+          id: "alg-8",
+          title: "Two Sum",
+          description: "Given an array of integers and a target sum, return the indices of two numbers that add up to the target.",
+          hint: "Use a hash map to store numbers and their indices. For each number, check if target minus that number exists in the map.",
+          starterCode: "function twoSum(nums, target) {\n  // Your code here\n  \n}",
           testCases: [
-            { input: "new Queue()", expected: "object", description: "Create queue instance" },
-          ]
-        },
-        {
-          id: "ds-3",
-          title: "Linked List Implementation",
-          description: "Implement a simple Linked List with append, prepend, and find methods.",
-          hint: "Create a Node class first, then implement the LinkedList class that manages nodes.",
-          starterCode: "class Node {\n  constructor(data) {\n    this.data = data;\n    this.next = null;\n  }\n}\n\nclass LinkedList {\n  constructor() {\n    this.head = null;\n  }\n  \n  append(data) {\n    // Your code here\n  }\n  \n  prepend(data) {\n    // Your code here\n  }\n  \n  find(data) {\n    // Your code here\n  }\n}",
-          testCases: [
-            { input: "new LinkedList()", expected: "object", description: "Create linked list instance" },
-          ]
-        },
-        {
-          id: "ds-4",
-          title: "Binary Tree Traversal",
-          description: "Implement in-order traversal for a binary tree.",
-          hint: "For in-order traversal: visit left subtree, visit root, visit right subtree.",
-          starterCode: "class TreeNode {\n  constructor(val) {\n    this.val = val;\n    this.left = null;\n    this.right = null;\n  }\n}\n\nfunction inorderTraversal(root) {\n  // Your code here\n}",
-          testCases: [
-            { input: "null", expected: [], description: "Empty tree" },
-          ]
-        },
-        {
-          id: "ds-5",
-          title: "Hash Table Implementation",
-          description: "Implement a simple Hash Table with set, get, and remove methods.",
-          hint: "Use an array of buckets and a hash function to determine where to store key-value pairs.",
-          starterCode: "class HashTable {\n  constructor(size = 10) {\n    this.size = size;\n    this.buckets = new Array(size);\n  }\n  \n  hash(key) {\n    // Your code here\n  }\n  \n  set(key, value) {\n    // Your code here\n  }\n  \n  get(key) {\n    // Your code here\n  }\n  \n  remove(key) {\n    // Your code here\n  }\n}",
-          testCases: [
-            { input: "new HashTable()", expected: "object", description: "Create hash table instance" },
+            { input: "[2, 7, 11, 15], 9", expected: [0, 1], description: "2 + 7 = 9" },
+            { input: "[3, 2, 4], 6", expected: [1, 2], description: "2 + 4 = 6" },
+            { input: "[3, 3], 6", expected: [0, 1], description: "3 + 3 = 6" },
+            { input: "[1, 2, 3], 7", expected: null, description: "No valid pair" }
           ]
         }
       ],
@@ -1170,6 +1280,19 @@ export const challengeData: ChallengeData = {
             { input: "[1]", expected: 1, description: "Single element" },
             { input: "[5, 4, -1, 7, 8]", expected: 23, description: "All positive except one" },
             { input: "[-1, -2, -3]", expected: -1, description: "All negative numbers" }
+          ]
+        },
+        {
+          id: "dp-6",
+          title: "House Robber",
+          description: "You're a robber planning to rob houses on a street. Adjacent houses have security systems. What's the maximum amount you can rob without alerting police?",
+          hint: "At each house, decide whether to rob it (can't rob adjacent) or skip it. Use DP to track max money at each position.",
+          starterCode: "function rob(nums) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "[1, 2, 3, 1]", expected: 4, description: "Rob house 0 and 2: 1 + 3 = 4" },
+            { input: "[2, 7, 9, 3, 1]", expected: 12, description: "Rob house 0, 2, and 4: 2 + 9 + 1 = 12" },
+            { input: "[5]", expected: 5, description: "Single house" },
+            { input: "[2, 1, 1, 2]", expected: 4, description: "Rob house 0 and 3: 2 + 2 = 4" }
           ]
         }
       ],
@@ -1270,6 +1393,20 @@ export const challengeData: ChallengeData = {
             { input: "'bbbbb'", expected: 1, description: "All same character" },
             { input: "'pwwkew'", expected: 3, description: "Longest is 'wke'" },
             { input: "''", expected: 0, description: "Empty string" }
+          ]
+        },
+        {
+          id: "str-alg-5",
+          title: "Valid Parentheses",
+          description: "Given a string containing parentheses '()', brackets '[]', and braces '{}', determine if the input string is valid.",
+          hint: "Use a stack to track opening brackets. When you see a closing bracket, check if it matches the most recent opening bracket.",
+          starterCode: "function isValid(s) {\n  // Your code here\n  \n}",
+          testCases: [
+            { input: "'()'", expected: true, description: "Simple valid parentheses" },
+            { input: "'()[]{}'", expected: true, description: "Multiple types valid" },
+            { input: "'(]'", expected: false, description: "Mismatched brackets" },
+            { input: "'([)]'", expected: false, description: "Wrong order" },
+            { input: "'{[]}'", expected: true, description: "Nested brackets" }
           ]
         }
       ]

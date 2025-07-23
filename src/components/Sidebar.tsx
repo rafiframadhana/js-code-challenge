@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChevronDown, ChevronRight, Check } from 'lucide-react';
 import { challengeData } from '../data/challenges';
 import type { Challenge } from '../data/challenges';
@@ -13,8 +13,57 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ selectedChallenge, onChallengeSelect, completedChallenges, isDarkMode, isMobileOpen, onMobileClose }: SidebarProps) {
-  const [expandedLevels, setExpandedLevels] = useState<Set<string>>(new Set(['Beginner']));
-  const [expandedTopics, setExpandedTopics] = useState<Set<string>>(new Set());
+  // Function to find which level contains the selected challenge
+  const findChallengeLevel = (challengeId: string | undefined) => {
+    if (!challengeId) return null;
+    
+    for (const [level, topics] of Object.entries(challengeData.levels)) {
+      for (const challenges of Object.values(topics)) {
+        if (challenges.some(challenge => challenge.id === challengeId)) {
+          return level;
+        }
+      }
+    }
+    return null;
+  };
+
+  // Function to find which topic contains the selected challenge
+  const findChallengeTopic = (challengeId: string | undefined) => {
+    if (!challengeId) return null;
+    
+    for (const [level, topics] of Object.entries(challengeData.levels)) {
+      for (const [topic, challenges] of Object.entries(topics)) {
+        if (challenges.some(challenge => challenge.id === challengeId)) {
+          return `${level}-${topic}`;
+        }
+      }
+    }
+    return null;
+  };
+
+  const currentLevel = findChallengeLevel(selectedChallenge?.id);
+  const currentTopic = findChallengeTopic(selectedChallenge?.id);
+  
+  const [expandedLevels, setExpandedLevels] = useState<Set<string>>(
+    new Set(currentLevel ? [currentLevel] : ['Beginner'])
+  );
+  const [expandedTopics, setExpandedTopics] = useState<Set<string>>(
+    new Set(currentTopic ? [currentTopic] : [])
+  );
+
+  // Update expanded levels and topics when selected challenge changes
+  useEffect(() => {
+    const newLevel = findChallengeLevel(selectedChallenge?.id);
+    const newTopic = findChallengeTopic(selectedChallenge?.id);
+    
+    if (newLevel) {
+      setExpandedLevels(prev => new Set([...prev, newLevel]));
+    }
+    
+    if (newTopic) {
+      setExpandedTopics(prev => new Set([...prev, newTopic]));
+    }
+  }, [selectedChallenge?.id]);
 
   const toggleLevel = (level: string) => {
     const newExpanded = new Set(expandedLevels);

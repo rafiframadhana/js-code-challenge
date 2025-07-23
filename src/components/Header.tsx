@@ -57,7 +57,7 @@ export default function Header({
               className="flex items-center space-x-2 sm:space-x-3 hover:opacity-75 transition-opacity duration-200"
             >
               <img
-                src="./logo.png"
+                src="/logo.png"
                 alt="JSCodeChallenge Logo"
                 className="w-8 h-8 sm:w-11 sm:h-11"
               />

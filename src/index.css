@@ -196,3 +196,16 @@
     line-height: 1.5 !important;
   }
 }
+
+/* Tooltip z-index fix - ensure tooltips appear above all content */
+div[data-tooltip-id] {
+  z-index: 99999 !important;
+}
+
+[role="tooltip"] {
+  z-index: 99999 !important;
+}
+
+.react-tooltip {
+  z-index: 99999 !important;
+}

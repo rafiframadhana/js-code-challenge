@@ -16,7 +16,7 @@ export default function LandingPage({ isDarkMode, onGetStarted }: LandingPagePro
             {/* Logo and Title */}
             <div className="space-y-4">
               <div className="flex justify-center lg:justify-start">
-                <img src="./logo.png" alt="JSCodeChallenge Logo" className="w-20 h-20" />
+                <img src="/logo.png" alt="JSCodeChallenge Logo" className="w-20 h-20" />
               </div>
               <div>
                 <h1 className={`text-4xl lg:text-5xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
@@ -34,7 +34,7 @@ export default function LandingPage({ isDarkMode, onGetStarted }: LandingPagePro
                 Master JavaScript Fundamentals
               </h2>
               <p className={`text-base ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                Practice JavaScript through interactive coding challenges. Build your skills with arrays, 
+                Practice JavaScript through 100+ interactive coding challenges. Build your skills with arrays, 
                 loops, recursion, and algorithms with instant feedback and progressive difficulty.
               </p>
             </div>
