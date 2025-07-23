@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import Header from './Header';
-import Sidebar from './Sidebar';
-import QuestionDisplay from './QuestionDisplay';
-import CodeEditor from './CodeEditor';
-import Footer from './Footer';
-import LevelSelectionModal from './LevelSelectionModal';
+import Header from '../components/Header';
+import Sidebar from '../components/Sidebar';
+import QuestionDisplay from '../components/QuestionDisplay';
+import CodeEditor from '../components/CodeEditor';
+import Footer from '../components/Footer';
+import LevelSelectionModal from '../components/LevelSelectionModal';
 import { useTheme } from '../hooks/useTheme';
 import { useProgress } from '../hooks/useProgress';
 import { useSound } from '../hooks/useSound';
