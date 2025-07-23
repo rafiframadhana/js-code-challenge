@@ -1,16 +1,18 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
 import QuestionDisplay from '../components/QuestionDisplay';
 import CodeEditor from '../components/CodeEditor';
 import Footer from '../components/Footer';
 import LevelSelectionModal from '../components/LevelSelectionModal';
+import AllChallengesCompleteModal from '../components/AllChallengesCompleteModal';
 import { useTheme } from '../hooks/useTheme';
 import { useProgress } from '../hooks/useProgress';
 import { useSound } from '../hooks/useSound';
 import { useDeviceType } from '../hooks/useDeviceType';
 import { challengeData } from '../data/challenges';
+import { areAllChallengesCompleted } from '../utils/challengeUtils';
 import type { Challenge } from '../data/challenges';
 
 interface TestResult {
@@ -25,13 +27,15 @@ interface TestResult {
 export default function ChallengePage() {
   const { challengeId } = useParams<{ challengeId: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
   const { isDarkMode, toggleTheme } = useTheme();
-  const { completedChallenges, markCompleted, isCompleted } = useProgress();
+  const { completedChallenges, markCompleted, isCompleted, resetChallenge, resetProgress } = useProgress();
   const { isSoundOn, toggleSound } = useSound();
   const isMobile = useDeviceType();
   
   const [selectedChallenge, setSelectedChallenge] = useState<Challenge | null>(null);
   const [showLevelModal, setShowLevelModal] = useState(false);
+  const [showAllCompleteModal, setShowAllCompleteModal] = useState(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [isDesktopSidebarOpen, setIsDesktopSidebarOpen] = useState(() => {
     const stored = localStorage.getItem('desktopSidebarOpen');
@@ -83,6 +87,16 @@ export default function ChallengePage() {
     }
   }, [challengeId, navigate]);
 
+  // Check if all challenges are completed - only show modal if coming from landing page
+  useEffect(() => {
+    if (selectedChallenge && areAllChallengesCompleted(completedChallenges)) {
+      // Only show modal if user came from landing page (state contains fromLanding flag)
+      if (location.state?.fromLanding) {
+        setShowAllCompleteModal(true);
+      }
+    }
+  }, [selectedChallenge, completedChallenges, location.state]);
+
   const handleLevelSelect = (levelName: string) => {
     const firstChallenge = findFirstUncompletedChallenge(levelName);
     if (firstChallenge) {
@@ -111,6 +125,15 @@ export default function ChallengePage() {
   const handleCodeEvaluate = (_code: string, results: TestResult[]) => {
     if (selectedChallenge && results.length > 0 && results.every(r => r.passed)) {
       markCompleted(selectedChallenge.id);
+      
+      // Check if this was the last challenge and show completion modal
+      setTimeout(() => {
+        const updatedCompleted = new Set(completedChallenges);
+        updatedCompleted.add(selectedChallenge.id);
+        if (areAllChallengesCompleted(updatedCompleted)) {
+          setShowAllCompleteModal(true);
+        }
+      }, 500); // Small delay to let the success animation play first
     }
   };
 
@@ -157,6 +180,7 @@ export default function ChallengePage() {
                 isDarkMode={isDarkMode}
                 isCompleted={isCompleted(selectedChallenge.id)}
                 onChallengeSelect={handleChallengeSelect}
+                onResetProgress={resetChallenge}
               />
             </div>
           </div>
@@ -234,6 +258,13 @@ export default function ChallengePage() {
           isDarkMode={isDarkMode}
         />
       )}
+
+      <AllChallengesCompleteModal
+        isOpen={showAllCompleteModal}
+        onClose={() => setShowAllCompleteModal(false)}
+        onResetAll={resetProgress}
+        isDarkMode={isDarkMode}
+      />
     </div>
   );
 }

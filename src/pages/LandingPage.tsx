@@ -41,7 +41,7 @@ export default function LandingPage() {
   const handleLevelSelect = (levelName: string) => {
     const firstChallenge = findFirstUncompletedChallenge(levelName);
     if (firstChallenge) {
-      navigate(`/challenge/${firstChallenge.id}`);
+      navigate(`/challenge/${firstChallenge.id}`, { state: { fromLanding: true } });
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
     setShowLevelModal(false);

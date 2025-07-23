@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Lightbulb, CheckCircle, ArrowRight, ArrowLeft } from "lucide-react";
+import { Lightbulb, CheckCircle, ArrowRight, ArrowLeft, RotateCcw } from "lucide-react";
 import { Tooltip } from "react-tooltip";
 import type { Challenge } from "../data/challenges";
 import HintModal from "./HintModal";
+import ConfirmModal from "./ConfirmModal";
 import DifficultyTag from "./DifficultyTag";
 import {
   getChallengeDifficulty,
@@ -15,6 +16,7 @@ interface QuestionDisplayProps {
   isCompleted: boolean;
   isDarkMode: boolean;
   onChallengeSelect: (challenge: Challenge) => void;
+  onResetProgress: (challengeId: string) => void;
 }
 
 export default function QuestionDisplay({
@@ -22,8 +24,10 @@ export default function QuestionDisplay({
   isCompleted,
   isDarkMode,
   onChallengeSelect,
+  onResetProgress,
 }: QuestionDisplayProps) {
   const [showHint, setShowHint] = useState(false);
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
   const difficulty = getChallengeDifficulty(challenge);
   const nextChallenge = findNextChallenge(challenge);
   const prevChallenge = findPrevChallenge(challenge);
@@ -38,6 +42,11 @@ export default function QuestionDisplay({
     if (prevChallenge) {
       onChallengeSelect(prevChallenge);
     }
+  };
+
+  const handleResetProgress = () => {
+    onResetProgress(challenge.id);
+    setShowResetConfirm(false);
   };
 
   return (
@@ -69,19 +78,35 @@ export default function QuestionDisplay({
             {challenge.description}
           </p>
         </div>
-        <button
-          onClick={() => setShowHint(true)}
-          data-tooltip-id="hint-tooltip"
-          data-tooltip-content="Get a helpful hint for this challenge"
-          className={`flex items-center justify-center space-x-1 px-3 lg:px-4 py-2 rounded-lg transition-colors self-start sm:self-auto ${
-            isDarkMode
-              ? "bg-yellow-900/20 hover:bg-yellow-900/30 text-yellow-400 border border-yellow-700"
-              : "bg-yellow-100 hover:bg-yellow-200 text-yellow-800 border border-yellow-300"
-          }`}
-        >
-          <Lightbulb className="w-4 h-4" />
-          <span className="text-sm font-medium"> Hint</span>
-        </button>
+        <div className="flex items-center space-x-2">
+          <button
+            onClick={() => setShowHint(true)}
+            data-tooltip-id="hint-tooltip"
+            data-tooltip-content="Get a helpful hint for this challenge"
+            className={`flex items-center justify-center space-x-1 px-3 py-2 rounded-lg transition-colors self-start sm:self-auto ${
+              isDarkMode
+                ? "bg-yellow-900/20 hover:bg-yellow-900/30 text-yellow-400 border border-yellow-700"
+                : "bg-yellow-100 hover:bg-yellow-200 text-yellow-800 border border-yellow-300"
+            }`}
+          >
+            <Lightbulb className="w-4 h-4" />
+            <span className="text-sm font-medium"> Hint</span>
+          </button>
+          {isCompleted && (
+            <button
+              onClick={() => setShowResetConfirm(true)}
+              data-tooltip-id="reset-tooltip"
+              data-tooltip-content="Reset progress for this challenge"
+              className={`flex items-center justify-center px-3 py-2 rounded-lg transition-colors self-start sm:self-auto ${
+                isDarkMode
+                  ? "bg-red-900/20 hover:bg-red-900/30 text-red-400 border border-red-700"
+                  : "bg-red-100 hover:bg-red-200 text-red-800 border border-red-300"
+              }`}
+            >
+              <RotateCcw className="w-5 h-5" />
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Test Cases Preview */}
@@ -210,9 +235,34 @@ export default function QuestionDisplay({
         isDarkMode={isDarkMode}
       />
 
+      <ConfirmModal
+        isOpen={showResetConfirm}
+        onClose={() => setShowResetConfirm(false)}
+        onConfirm={handleResetProgress}
+        title="Reset Challenge Progress"
+        message={`Are you sure you want to reset your progress for "${challenge.title}" challenge? This action cannot be undone.`}
+        confirmText="Reset"
+        cancelText="Cancel"
+        isDarkMode={isDarkMode}
+        variant="danger"
+      />
+
       {/* Tooltips */}
       <Tooltip
         id="hint-tooltip"
+        place="bottom"
+        style={{
+          backgroundColor: isDarkMode ? "#374151" : "#111827",
+          color: isDarkMode ? "#f3f4f6" : "#ffffff",
+          fontSize: "12px",
+          borderRadius: "6px",
+          padding: "4px 8px",
+          zIndex: 10000,
+          marginTop: 5,
+        }}
+      />
+      <Tooltip
+        id="reset-tooltip"
         place="bottom"
         style={{
           backgroundColor: isDarkMode ? "#374151" : "#111827",

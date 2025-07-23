@@ -31,10 +31,18 @@ export function useProgress() {
     localStorage.removeItem('completed-challenges');
   };
 
+  const resetChallenge = (challengeId: string) => {
+    const newCompleted = new Set(completedChallenges);
+    newCompleted.delete(challengeId);
+    setCompletedChallenges(newCompleted);
+    localStorage.setItem('completed-challenges', JSON.stringify(Array.from(newCompleted)));
+  };
+
   return {
     completedChallenges,
     markCompleted,
     isCompleted,
-    resetProgress
+    resetProgress,
+    resetChallenge
   };
 }

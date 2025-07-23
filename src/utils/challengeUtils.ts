@@ -100,3 +100,27 @@ export function findPrevChallenge(
   // Return the previous challenge regardless of completion status
   return allChallenges[currentIndex - 1];
 }
+
+export function getAllChallenges(): Challenge[] {
+  const allChallenges: Challenge[] = [];
+  
+  // Flatten all challenges into a single array while maintaining order
+  Object.keys(challengeData.levels).forEach(levelName => {
+    const level = challengeData.levels[levelName];
+    Object.keys(level).forEach(topicName => {
+      const challenges = level[topicName];
+      allChallenges.push(...challenges);
+    });
+  });
+
+  return allChallenges;
+}
+
+export function getTotalChallengeCount(): number {
+  return getAllChallenges().length;
+}
+
+export function areAllChallengesCompleted(completedChallenges: Set<string>): boolean {
+  const allChallenges = getAllChallenges();
+  return allChallenges.every(challenge => completedChallenges.has(challenge.id));
+}
