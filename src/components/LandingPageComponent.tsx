@@ -15,11 +15,11 @@ export default function LandingPageComponent({ isDarkMode, onGetStarted }: Landi
             {/* Logo and Title */}
             <div className="space-y-4">
               <div className="flex justify-center lg:justify-start">
-                <img src="/logo.png" alt="JSCodeChallenge Logo" className="w-20 h-20" />
+                <img src="/logo.png" alt="JSCodeChallenger Logo" className="w-20 h-20" />
               </div>
               <div>
                 <h1 className={`text-4xl lg:text-5xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-                  JSCodeChallenge
+                  JSCodeChallenger
                 </h1>
                 <p className={`text-lg ${isDarkMode ? 'text-gray-300' : 'text-gray-600'} mt-2`}>
                   Learn. Solve. Repeat.
@@ -86,7 +86,7 @@ export default function LandingPageComponent({ isDarkMode, onGetStarted }: Landi
           <div className="space-y-6">
             <div className="text-center lg:text-left">
               <h3 className={`text-xl font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-4`}>
-                Why Choose JSCodeChallenge?
+                Why Choose JSCodeChallenger?
               </h3>
             </div>
             

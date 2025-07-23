@@ -1,6 +1,6 @@
-# JSCodeChallenge 🚀
+# JSCodeChallenger 🚀
 
-**JSCodeChallenge** is a modern, interactive web application designed to help me and fellow JavaScript developers master the fundamentals of JavaScript through hands-on coding challenges. Built with **React**, **TypeScript**, and **Tailwind CSS**, this platform offers a smooth and responsive learning experience. It's **completely free**, requires **no sign-up**, and is perfect for practicing JavaScript anytime, anywhere.
+**JSCodeChallenger** is a modern, interactive web application designed to help me and fellow JavaScript developers master the fundamentals of JavaScript through hands-on coding challenges. Built with **React**, **TypeScript**, and **Tailwind CSS**, this platform offers a smooth and responsive learning experience. It's **completely free**, requires **no sign-up**, and is perfect for practicing JavaScript anytime, anywhere.
 
 ![Landing Page](./public/screenshot-1.png)
 
@@ -35,8 +35,8 @@
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/rafiframadhana/js-code-challenge.git
-cd js-code-challenge
+git clone https://github.com/rafiframadhana/js-code-challenger.git
+cd js-code-challenger
 ```
 
 2. Install dependencies:

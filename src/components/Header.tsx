@@ -58,7 +58,7 @@ export default function Header({
             >
               <img
                 src="/logo.png"
-                alt="JSCodeChallenge Logo"
+                alt="JSCodeChallenger Logo"
                 className="w-8 h-8 sm:w-11 sm:h-11"
               />
               <div className="text-left">
@@ -67,7 +67,7 @@ export default function Header({
                     isDarkMode ? "text-white" : "text-gray-900"
                   }`}
                 >
-                  <span className="sm:inline">JSCodeChallenge</span>
+                  <span className="sm:inline">JSCodeChallenger</span>
                 </h1>
                 <p
                   className={`text-xs sm:text-sm ${
