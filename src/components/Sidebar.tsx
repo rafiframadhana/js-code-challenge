@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { ChevronDown, ChevronRight, Check } from 'lucide-react';
 import { challengeData } from '../data/challenges';
 import type { Challenge } from '../data/challenges';

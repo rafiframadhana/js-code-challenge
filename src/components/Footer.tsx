@@ -1,4 +1,3 @@
-import React from 'react';
 import { ExternalLink, Github, Globe } from 'lucide-react';
 
 interface FooterProps {

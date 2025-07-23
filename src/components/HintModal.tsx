@@ -1,4 +1,3 @@
-import React from "react";
 import { X, Lightbulb } from "lucide-react";
 
 interface HintModalProps {
